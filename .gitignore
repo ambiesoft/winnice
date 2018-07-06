@@ -1,2 +1,13 @@
 build-winnice*/
+src/.vs/
+src/Debug/
+src/Release/
+src/libwinnice/Win32/
+src/libwinnice/x64/
+src/winnice/Win32/
+src/winnice/winnice.vcxproj.user
+src/winnice/x64/
+src/winnicesolution.pro.user
+src/zzzDist/Release/
+src/zzzDist/x64/
 
