@@ -3,6 +3,8 @@
 #include "../../../lsMisc/SetPrority.h"
 #include "../../../lsMisc/CommandLineString.h"
 #include "../../../lsMisc/CreateProcessCommon.h"
+#include "../../../lsMisc/stlScopedClear.h"
+
 
 #include "mytype.h"
 #include "libwinnice.h"
@@ -38,6 +40,8 @@ int LibWinNiceMain()
 
 	CPUPRIORITY cpuPriority = CPUPRIORITY::CPU_NONE;
 	IOPRIORITY ioPriority = IOPRIORITY::IO_NONE;
+	MEMORYPRIORITY memPriority = MEMORYPRIORITY::MEMORY_NONE;
+
 	bool showCommand = false;
 	bool exitifsetpriorityfailed = false;
 	size_t i = 1;
@@ -69,6 +73,44 @@ int LibWinNiceMain()
 		else if (option == MYL("--io-idle"))
 			ioPriority = IO_IDLE;
 
+		else if (option == MYL("--mem-high"))
+			memPriority = MEMORY_HIGH;
+		else if (option == MYL("--mem-abovenormal"))
+			memPriority = MEMORY_ABOVENORMAL;
+		else if (option == MYL("--mem-normal"))
+			memPriority = MEMORY_NORMAL;
+		else if (option == MYL("--mem-belownormal"))
+			memPriority = MEMORY_BELOWNORMAL;
+		else if (option == MYL("--mem-idle"))
+			memPriority = MEMORY_IDLE;
+
+		else if (option == MYL("--all-high")) {
+			cpuPriority = CPU_HIGH;
+			ioPriority = IO_HIGH;
+			memPriority = MEMORY_HIGH;
+		}
+		else if (option == MYL("--all-abovenormal")) {
+			cpuPriority = CPU_ABOVENORMAL;
+			ioPriority = IO_ABOVENORMAL;
+			memPriority = MEMORY_ABOVENORMAL;
+		}
+		else if (option == MYL("--all-normal")) {
+			cpuPriority = CPU_NORMAL;
+			ioPriority = IO_NORMAL;
+			memPriority = MEMORY_NORMAL;
+		}
+		else if (option == MYL("--all-belownormal")) {
+			cpuPriority = CPU_BELOWNORMAL;
+			ioPriority = IO_BELOWNORMAL;
+			memPriority = MEMORY_BELOWNORMAL;
+		}
+		else if (option == MYL("--all-idle")) {
+			cpuPriority = CPU_IDLE;
+			ioPriority = IO_IDLE;
+			memPriority = MEMORY_IDLE;
+		}
+
+
 		else if (option == MYL("--show-command"))
 			showCommand = true;
 		else if (option == MYL("--exit-if-setpriority-failed"))
@@ -90,20 +132,29 @@ int LibWinNiceMain()
 	}
 
 	DWORD dwLastError = 0;
-	DWORD dwProcessID = 0;
 	HANDLE hProcess = NULL;
-	if (!CreateProcessCommon(newcommnad.c_str(),
+	DWORD dwProcessID = 0;
+
+	HANDLE hThread = NULL;
+
+	if (!CreateProcessCommon(
 		NULL,
+		(MYL("cmd /c ") + newcommnad).c_str(),
 		FALSE,
 		&dwLastError,
 		WaitProcess_None,
 		INFINITE,
 		&hProcess,
-		&dwProcessID))
+		&dwProcessID,
+		&hThread,
+		NULL,
+		TRUE))
 	{
 		cout << "Failed to CreateProcess (LastError=" << dwLastError << ")" << endl;
 		return dwLastError;
 	}
+	STLSOFT_SCOPEDFREE_HANDLE(hProcess);
+	STLSOFT_SCOPEDFREE_HANDLE(hThread);
 
 	if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
 	{
@@ -112,22 +163,31 @@ int LibWinNiceMain()
 		return dwLastError;
 	}
 
-	if (!(cpuPriority == CPU_NONE && ioPriority == IO_NONE))
+	if (!(cpuPriority == CPU_NONE && ioPriority == IO_NONE && memPriority == MEMORY_NONE))
 	{
 		string errorstd;
 		if (!Ambiesoft::SetProirity(
-			(void*)dwProcessID,
+			dwProcessID,
 			cpuPriority,
 			ioPriority,
+			memPriority,
 			errorstd))
 		{
 			cout << "Failed to set priority:" << endl;
 			cout << "  " << errorstd << endl;
 			if (exitifsetpriorityfailed)
+			{
+				TerminateProcess(hProcess, -1);
 				return 1;
+			}
 		}
 	}
-	
+	if (!ResumeThread(hThread))
+	{
+		cout << "Resuming failed" << endl;
+		TerminateProcess(hProcess, -1);
+		return 1;
+	}
 	gWaiting = true;
 	WaitForSingleObject(hProcess, INFINITE);
 	gWaiting = false;

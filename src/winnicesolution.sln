@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winnice", "winnice\winnice.vcxproj", "{FA3BA912-28D0-4A3E-8D72-597C2CBD9C36}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C8C2482B-ED42-49D9-B013-43C38FD31FA7} = {C8C2482B-ED42-49D9-B013-43C38FD31FA7}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libwinnice", "libwinnice\libwinnice.vcxproj", "{C97C4F0A-B15C-4123-8083-CD7AF2B54A87}"
 EndProject
