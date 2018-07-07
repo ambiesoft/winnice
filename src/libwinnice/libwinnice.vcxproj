@@ -159,12 +159,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp" />
     <ClCompile Include="..\..\..\lsMisc\SetPrority_win.cpp" />
+    <ClCompile Include="..\..\..\lsMisc\stdwin32\stdwin32.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="libwinnice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\lsMisc\CreateProcessCommon.h" />
     <ClInclude Include="..\..\..\lsMisc\SetPrority.h" />
+    <ClInclude Include="..\..\..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="..\..\..\lsMisc\stlScopedClear.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
