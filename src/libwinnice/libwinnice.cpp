@@ -15,6 +15,23 @@ Libwinnice::Libwinnice()
 {
 }
 
+bool gWaiting;
+BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
+{
+	switch (fdwCtrlType)
+	{
+	// Handle the CTRL-C signal. 
+	case CTRL_C_EVENT:
+		if (gWaiting)
+		{
+			printf("winnice ignores Ctrl-C event.\n");
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
 int LibWinNiceMain()
 {
 	CCommandLineStringBase<tchar> cms;
@@ -88,6 +105,13 @@ int LibWinNiceMain()
 		return dwLastError;
 	}
 
+	if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
+	{
+		DWORD dwLastError = GetLastError();
+		cout << "SetConsoleCtrlHandler Failed (LastError=" << dwLastError << ")" << endl;
+		return dwLastError;
+	}
+
 	if (!(cpuPriority == CPU_NONE && ioPriority == IO_NONE))
 	{
 		string errorstd;
@@ -104,7 +128,9 @@ int LibWinNiceMain()
 		}
 	}
 	
+	gWaiting = true;
 	WaitForSingleObject(hProcess, INFINITE);
+	gWaiting = false;
 
 	DWORD dwExitCode = -1;
 	if (!GetExitCodeProcess(hProcess, &dwExitCode))

@@ -6,6 +6,7 @@ src/libwinnice/Win32/
 src/libwinnice/x64/
 src/winnice/Win32/
 src/winnice/winnice.vcxproj.user
+src/libwinnice/libwinnice.vcxproj.user
 src/winnice/x64/
 src/winnicesolution.pro.user
 src/zzzDist/Release/
