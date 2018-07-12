@@ -6,13 +6,13 @@
 
 #ifdef _WIN32
 typedef wchar_t tchar;
-typedef std::wstring tstring;
-#define tcout std::wcout
+//typedef std::wstring tstring;
+//#define tcout std::wcout
 #define MYL(s) L ## s
 #else
 typedef char tchar;
-typedef std::string tstring;
-#define tcout std::cout
+//typedef std::string tstring;
+//#define tcout std::cout
 #define MYL(s) s
 #endif
 

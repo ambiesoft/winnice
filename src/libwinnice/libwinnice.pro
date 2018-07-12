@@ -23,9 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += ../../../lsMisc/stlsoft/include
+
 SOURCES += \
         libwinnice.cpp \
-    ../../../lsMisc/CreateProcessCommon.cpp
+    ../../../lsMisc/CreateProcessCommon.cpp \
+    ../../../lsMisc/GetLastErrorString.cpp \
+    ../../../lsMisc/stdwin32/stdwin32.cpp
 
 HEADERS += \
         libwinnice.h \
@@ -33,7 +37,9 @@ HEADERS += \
 	../../../lsMisc/SetPrority.h \
 	../../../lsMisc/CommandLineString.h \
     mytype.h \
-    ../../../lsMisc/CreateProcessCommon.h
+    ../../../lsMisc/CreateProcessCommon.h \
+    ../../../lsMisc/GetLastErrorString.h \
+    ../../../lsMisc/stdwin32/stdwin32.h
 
 unix {
     target.path = /usr/lib
