@@ -21,13 +21,32 @@
 
 #include "mytype.h"
 #include "libwinnice.h"
+#include "helper.h"
+
+
 
 using namespace Ambiesoft;
 using namespace stdwin32;
 using namespace std;
 
+// TODO: implement
+std::set<std::wstring> gOptions =
+{
+	L"--helpmore",
+	L"-h",
+};
 
+wstring op(wstring option)
+{
+	assert(gOptions.find(option) != gOptions.end());
+	return option;
+}
 
+// TODO: implement
+wstring GetHammingSuggest(wstring option)
+{
+	return wstring();
+}
 bool gWaiting;
 BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
 {
@@ -133,8 +152,10 @@ enum TargetType
 	TARGET_FIND_FROM_EXECUTABLE,
 	TARGET_NEW_PROCESS,
 };
-int LibWinNiceMain()
+int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 {
+	gUFShowInformation = wnuShowInformation;
+
 	CCommandLineStringBase<tchar> cms;
 
 	CPUPRIORITY cpuPriority = CPUPRIORITY::CPU_NONE;
@@ -165,6 +186,8 @@ int LibWinNiceMain()
 			cpuPriority = CPU_BELOWNORMAL;
 		else if (option == MYL("--cpu-idle"))
 			cpuPriority = CPU_IDLE;
+		else if (option == MYL("--cpu-default"))
+			cpuPriority = CPU_NONE;
 
 		else if (option == MYL("--io-high"))
 			ioPriority = IO_HIGH;
@@ -176,6 +199,8 @@ int LibWinNiceMain()
 			ioPriority = IO_BELOWNORMAL;
 		else if (option == MYL("--io-idle"))
 			ioPriority = IO_IDLE;
+		else if (option == MYL("--io-default"))
+			ioPriority = IO_NONE;
 
 		else if (option == MYL("--mem-high"))
 			memPriority = MEMORY_HIGH;
@@ -187,6 +212,8 @@ int LibWinNiceMain()
 			memPriority = MEMORY_BELOWNORMAL;
 		else if (option == MYL("--mem-idle"))
 			memPriority = MEMORY_IDLE;
+		else if (option == MYL("--mem-default"))
+			memPriority = MEMORY_NONE;
 
 		else if (option == MYL("--all-high")) {
 			cpuPriority = CPU_HIGH;
@@ -255,9 +282,23 @@ int LibWinNiceMain()
 			}
 			targetType = TARGET_NEW_PROCESS;
 		}
+		else if (option == MYL("-h") || option == MYL("/h") ||
+			option == MYL("--help"))
+		{
+			ShowHelp();
+			return 0;
+		}
+		else if (option == op(L"--helpmore"))
+		{
+			ShowHelp(true);
+			return 0;
+		}
 		else if(option.size() > 1 && option[0]==MYL('-'))
 		{
-			ShowError(MYL("Unknown option:") + option);
+			wstringstream message;
+			message << (MYL("Unknown option:") + option) << endl;
+			message << GetHammingSuggest(option) << endl;
+			ShowError(message.str());
 			return 1;
 		}
 		else
