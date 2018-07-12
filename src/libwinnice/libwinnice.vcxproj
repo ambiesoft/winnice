@@ -158,12 +158,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp" />
+    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp" />
     <ClCompile Include="..\..\..\lsMisc\SetPrority_win.cpp" />
+    <ClCompile Include="..\..\..\lsMisc\stdwin32\stdwin32.cpp" />
+    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="libwinnice.cpp" />
+    <ClCompile Include="osd_linux.cpp" />
+    <ClCompile Include="osd_win32.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\lsMisc\GetLastErrorString.h" />
     <ClInclude Include="..\..\..\lsMisc\SetPrority.h" />
+    <ClInclude Include="..\..\..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="libwinnice.h" />
+    <ClInclude Include="libwinnice_global.h" />
+    <ClInclude Include="mytype.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
