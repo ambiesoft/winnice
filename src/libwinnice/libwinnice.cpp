@@ -16,10 +16,11 @@
 #include "../../../lsMisc/CommandLineString.h"
 #include "../../../lsMisc/CreateProcessCommon.h"
 #include "../../../lsMisc/GetLastErrorString.h"
+#include "../../../lsMisc/tstring.h"
 #include "../../../lsMisc/stlScopedClear.h"
 #include "../../../lsMisc/stdwin32/stdwin32.h"
 
-#include "mytype.h"
+
 #include "libwinnice.h"
 #include "helper.h"
 
@@ -87,21 +88,7 @@ set<DWORD> GetProcessIDFromExecutable(LPCTSTR pExe)
 	return retVec;
 }
 
-void ShowError(const tchar* pMessage)
-{
-	wcerr << pMessage << endl;
-}
-void ShowError(const tstring message)
-{
-	ShowError(message.c_str());
-}
-void ShowErrorWithLastError(int err)
-{
-	wstringstream wss;
-	wss << "Failed to set priority with error (" << err << ")" << endl;
-	wss << "  " << GetLastErrorString(err) << endl;
-	ShowError(wss.str());
-}
+
 
 template<typename chartype>
 basic_string<chartype> stdGetEnv(const basic_string<chartype>& s)
@@ -152,9 +139,12 @@ enum TargetType
 	TARGET_FIND_FROM_EXECUTABLE,
 	TARGET_NEW_PROCESS,
 };
-int LibWinNiceMain(WNUShowInformation wnuShowInformation)
+int LibWinNiceMain(
+	WNUShowInformation wnuShowOutput,
+	WNUShowInformation wnuShowError)
 {
-	gUFShowInformation = wnuShowInformation;
+	gUFShowOutput = wnuShowOutput;
+	gUFShowError = wnuShowError;
 
 	CCommandLineStringBase<tchar> cms;
 
@@ -170,7 +160,12 @@ int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 	set<DWORD> targetIDs;
 
 	size_t nSubcommandStartIndex = -1;
-	size_t count = cms.getCount();
+	const size_t count = cms.getCount();
+	if (count <= 1)
+	{
+		ShowError(L"No arguments");
+		return 1;
+	}
 	for (size_t i = 1; i < count; ++i)
 	{
 		tstring option = cms.getArg(i);
@@ -271,6 +266,12 @@ int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 			}
 			targetType = TARGET_FIND_FROM_EXECUTABLE;
 			set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
+			if (vs.empty())
+			{
+				tstringstream tss;
+				tss << MYL("\"") << exe << MYL("\"") << MYL(" ") << MYL("not found") << endl;
+				ShowError(tss);
+			}
 			targetIDs.insert(vs.begin(), vs.end());
 		}
 		else if (option == MYL("--new-process"))
@@ -365,13 +366,17 @@ int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 		tstring newcommnad = cms.subString(nSubcommandStartIndex);
 		if (newcommnad.empty())
 		{
-			cout << "No command to run" << endl;
+			tstringstream tss;
+			tss << MYL("No command to run") << endl;
+			ShowError(tss);
 			return 1;
 		}
 
 		if (showCommand)
 		{
-			tcout << newcommnad << endl;
+			tstringstream tss;
+			tss << newcommnad << endl;
+			ShowOutput(tss);
 		}
 
 		DWORD dwLastError = 0;
@@ -393,7 +398,9 @@ int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 			NULL,
 			TRUE))
 		{
-			cout << "Failed to CreateProcess (LastError=" << dwLastError << ")" << endl;
+			wstringstream wss;
+			wss << L"Failed to CreateProcess (LastError=" << dwLastError << L")" << endl;
+			ShowError(wss.str());
 			return dwLastError;
 		}
 		STLSOFT_SCOPEDFREE_HANDLE(hProcess);
@@ -402,7 +409,9 @@ int LibWinNiceMain(WNUShowInformation wnuShowInformation)
 		if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
 		{
 			DWORD dwLastError = GetLastError();
-			cout << "SetConsoleCtrlHandler Failed (LastError=" << dwLastError << ")" << endl;
+			wstringstream wss;
+			wss << L"SetConsoleCtrlHandler Failed (LastError=" << dwLastError << L")" << endl;
+			ShowError(wss.str());
 			return dwLastError;
 		}
 

@@ -1,18 +1,68 @@
 #include "StdAfx.h"
 #include <sstream>
+
+#include "../../tstring.h"
+#include "../../GetLastErrorString.h"
+
 #include "libwinnice.h"
 
 #include "helper.h"
 
+
+
+WNUShowInformation gUFShowOutput;
+WNUShowInformation gUFShowError;
+
+#define CHECK_USERFUNC(func) do { if(!func) {return;}} while(false)
+
 using namespace std;
+using namespace Ambiesoft;
 
-WNUShowInformation gUFShowInformation;
+void ShowOutput(const tchar* pMessage)
+{
+	CHECK_USERFUNC(gUFShowOutput);
+	gUFShowOutput(pMessage);
+}
+void ShowOutput(const tstring& s)
+{
+	CHECK_USERFUNC(gUFShowOutput);
+	ShowOutput(s.c_str());
+}
+void ShowOutput(const tstringstream& s)
+{
+	CHECK_USERFUNC(gUFShowOutput);
+	ShowOutput(s.str());
+}
 
+
+void ShowError(const tchar* pMessage)
+{
+	CHECK_USERFUNC(gUFShowError);
+	gUFShowError(pMessage);
+}
+void ShowError(const tstring& message)
+{
+	CHECK_USERFUNC(gUFShowError);
+	ShowError(message.c_str());
+}
+void ShowError(const tstringstream& message)
+{
+	CHECK_USERFUNC(gUFShowError);
+	ShowError(message.str());
+}
+void ShowErrorWithLastError(int err)
+{
+	tstring errorMessage = GetLastErrorString(err);
+	if (!errorMessage.empty())
+		errorMessage = MYL(": \"") + errorMessage + MYL("\"");
+	wstringstream wss;
+	wss << L"Failed to set priority with error" << MYL("(") << err << MYL(")") << errorMessage << endl;
+	ShowError(wss.str());
+}
 void ShowHelp(bool more)
 {
-	if (!gUFShowInformation)
-		return;
-	
+	CHECK_USERFUNC(gUFShowOutput);
+
 	wstringstream wss;
 	wss << APPNAME << endl;
 	wss << L"  Set process priority" << endl;
@@ -37,7 +87,7 @@ void ShowHelp(bool more)
 		wss << endl;
 		wss << L"Run with '--helpmore' for more help" << endl;
 
-		gUFShowInformation(wss.str().c_str());
+		gUFShowOutput(wss.str().c_str());
 		return;
 	}
 
@@ -59,5 +109,5 @@ void ShowHelp(bool more)
 	wss << L"  (Omitable) create a new process and set priority" << endl;
 	wss << endl;
 
-	gUFShowInformation(wss.str().c_str());
+	gUFShowOutput(wss.str().c_str());
 }

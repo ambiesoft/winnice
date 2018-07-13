@@ -11,6 +11,7 @@ src/winnice/x64/
 src/winnicesolution.pro.user
 src/zzzDist/Release/
 src/zzzDist/x64/
+src/zzzDist/zzzDist.vcxproj.user
 
 src/testtarget/Debug/
 src/testtarget/Release/

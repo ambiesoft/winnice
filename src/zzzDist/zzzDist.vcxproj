@@ -114,7 +114,8 @@ del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
-</Command>
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -141,7 +142,8 @@ del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
-</Command>
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -168,7 +170,8 @@ del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
-</Command>
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,7 +202,8 @@ del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
-</Command>
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

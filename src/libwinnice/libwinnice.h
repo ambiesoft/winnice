@@ -5,6 +5,8 @@
 
 typedef void(*WNUShowInformation)(const wchar_t* pMessage);
 
-LIBWINNICESHARED_EXPORT int LibWinNiceMain(WNUShowInformation wnuShowInformation);
+LIBWINNICESHARED_EXPORT int LibWinNiceMain(
+	WNUShowInformation wnuShowOutput,
+	WNUShowInformation wnuShowError);
 
 #endif // LIBWINNICE_H

@@ -1,0 +1,36 @@
+{
+    "name": "winnice",
+    "solution": "winnicesolution.sln",
+    "targetproject": "zzzDist",
+    "configuration": "zzzDistConfig",
+    "targets": [
+        {
+            "setoutdirforbuild": false,
+            "outdir": "Release\\winnice\\x86",
+            "platform": "x86"
+        },
+        {
+            "setoutdirforbuild": false,
+            "outdir": "Release\\winnice\\x64",
+            "platform": "x64"
+        }
+        
+    ],
+    
+    "archivingdir": "Release\\winnice",
+    
+    "ShouldBeFiles": [
+        "libwinnice.dll",
+        "winnice.exe",
+        "winnicew.exe",
+        "history.txt"
+    ],
+    "TotalFileCount": "exact",
+    "archivedir": "C:\\Linkout",
+    "remotedir": "http://ambiesoft.fam.cx/ffdav/uploads/winnice/",
+    "remotesha1": "http://ambiesoft.fam.cx/ffdav/uploads/getSha1.php?file=winnice/{}",
+    "ShouldNotBeFiles": [],
+    "ShouldBeOneOfThem": [],
+    "obtainverfrom": "history.txt",
+    "obtainverregex": "\\d+\\.\\d+\\.\\d+"
+}

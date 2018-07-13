@@ -3,11 +3,15 @@
 #include "../libwinnice/libwinnice.h"
 
 using namespace std;
-void ShowInformation(const wchar_t* pMessage)
+void showOutput(const wchar_t* pMessage)
 {
-	wcout << pMessage << endl;
+	wcout << pMessage;
+}
+void showError(const wchar_t* pMessage)
+{
+	wcerr << pMessage;
 }
 int main()
 {
-    return LibWinNiceMain(ShowInformation);
+	return LibWinNiceMain(showOutput, showError);
 }

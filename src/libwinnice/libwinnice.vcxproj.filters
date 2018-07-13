@@ -33,13 +33,13 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="osd_linux.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="osd_win32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,10 +62,10 @@
     <ClInclude Include="libwinnice_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mytype.h">
+    <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="helper.h">
+    <ClInclude Include="..\..\..\lsMisc\tstring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
