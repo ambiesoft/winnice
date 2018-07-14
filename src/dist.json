@@ -23,7 +23,8 @@
         "libwinnice.dll",
         "winnice.exe",
         "winnicew.exe",
-        "history.txt"
+        "history.txt",
+        "README.md"
     ],
     "TotalFileCount": "exact",
     "archivedir": "C:\\Linkout",

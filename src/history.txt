@@ -1,2 +1,6 @@
+2018/07/14 ver1.0.1
+Accept many options
+Add License
+
 2018/07/14 ver1.0.0
 Test publish

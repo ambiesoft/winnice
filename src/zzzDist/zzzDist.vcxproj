@@ -115,7 +115,12 @@ del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
-copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
+del $(OutDir)testtarget.exe
+del $(OutDir)runtest.bat
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"
+copy "$(SolutionDir)..\README.md" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -143,7 +148,12 @@ del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
-copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
+del $(OutDir)testtarget.exe
+del $(OutDir)runtest.bat
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"
+copy "$(SolutionDir)..\README.md" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -171,7 +181,12 @@ del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
-copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
+del $(OutDir)testtarget.exe
+del $(OutDir)runtest.bat
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"
+copy "$(SolutionDir)..\README.md" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -203,7 +218,12 @@ del "$(OutDir)*.ipdb"
 del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
-copy "$(SolutionDir)history.txt" "$(OutDir)"</Command>
+del $(OutDir)testtarget.exe
+del $(OutDir)runtest.bat
+
+copy "$(SolutionDir)history.txt" "$(OutDir)"
+copy "$(SolutionDir)..\README.md" "$(OutDir)"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
