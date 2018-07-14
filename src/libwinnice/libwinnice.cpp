@@ -162,6 +162,7 @@ enum TargetType
 	TARGET_NEW_PROCESS,
 };
 int LibWinNiceMain(
+	bool bGui,
 	WNUShowInformation wnuShowOutput,
 	WNUShowInformation wnuShowError)
 {
@@ -446,7 +447,7 @@ int LibWinNiceMain(
 
 		if (!CreateProcessCommon(
 			NULL,
-			ModifyCommand(newcommnad).c_str(),
+			bGui ? newcommnad.c_str() : ModifyCommand(newcommnad).c_str(),
 			FALSE,
 			&dwLastError,
 			WaitProcess_None,

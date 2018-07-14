@@ -13,5 +13,5 @@ void showError(const wchar_t* pMessage)
 }
 int main()
 {
-	return LibWinNiceMain(showOutput, showError);
+	return LibWinNiceMain(false, showOutput, showError);
 }
