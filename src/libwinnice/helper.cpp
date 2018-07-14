@@ -100,8 +100,9 @@ void ShowHelp(bool more)
 	wss << L"  Show the command for creating a new process" << endl;
 	wss << endl;
 	wss << L"  [--exit-if-setpriority-failed]" << endl;
-	wss << L"  [--detach-newprocess]" << endl;
-	wss << L"  In command line mode, detach spawned process and exit immidiately" << endl;
+	wss << L"  [--detach-newprocess | --wait-newprocess]" << endl;
+	wss << L"  Whether or not to wait new process to finish. Default value is different between winnice and winnicew, "
+		L"winnice's default value is '--wait-newprocess' and winnicew's one is '--detach-newprocess'" << endl;
 	wss << endl;
 	wss << L"  [--executable Executable [--executable Executable]]..." << endl;
 	wss << L"  Specify executables" << endl;

@@ -199,7 +199,7 @@ int LibWinNiceMain(
 
 	bool showCommand = false;
 	bool exitifsetpriorityfailed = false;
-	bool detachNewProcess = false;
+	bool detachNewProcess = bGui ? true : false;
 	bool newProcess = false;
 	// TargetType targetType = TARGET_NONE;
 
@@ -293,6 +293,8 @@ int LibWinNiceMain(
 				exitifsetpriorityfailed = true;
 			else if (option == MYL("--detach-newprocess"))
 				detachNewProcess = true;
+			else if (option == MYL("--wait-newprocess"))
+				detachNewProcess = false;
 
 
 			else if (option == MYL("--executable"))
@@ -488,13 +490,16 @@ int LibWinNiceMain(
 		STLSOFT_SCOPEDFREE_HANDLE(hProcess);
 		STLSOFT_SCOPEDFREE_HANDLE(hThread);
 
-		if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
+		if (!bGui)
 		{
-			DWORD dwLastError = GetLastError();
-			wstringstream wss;
-			wss << L"SetConsoleCtrlHandler Failed (LastError=" << dwLastError << L")" << endl;
-			ShowError(wss.str());
-			return dwLastError;
+			if (!SetConsoleCtrlHandler(CtrlHandler, TRUE))
+			{
+				DWORD dwLastError = GetLastError();
+				wstringstream wss;
+				wss << L"SetConsoleCtrlHandler Failed (LastError=" << dwLastError << L")" << endl;
+				ShowError(wss.str());
+				return dwLastError;
+			}
 		}
 
 		if (!(cpuPriority == CPU_NONE && ioPriority == IO_NONE && memPriority == MEMORY_NONE))
