@@ -19,6 +19,7 @@
 #include "../../../lsMisc/tstring.h"
 #include "../../../lsMisc/stlScopedClear.h"
 #include "../../../lsMisc/stdwin32/stdwin32.h"
+#include "../../../lsMisc/stdosd/stdosd.h"
 
 
 #include "libwinnice.h"
@@ -28,6 +29,7 @@
 
 using namespace Ambiesoft;
 using namespace stdwin32;
+using namespace Ambiesoft::stdosd;
 using namespace std;
 
 // TODO: implement
@@ -105,7 +107,7 @@ bool IsExecutableExtension(stringtype s)
 		return false;
 
 	stringtype env = stdGetEnv(stringtype(MYL("PATHEXT")));
-	vector<stringtype> vExts = stdwin32::split_string(env, MYL(";"));
+	vector<stringtype> vExts = stdwin32::stdSplitString(env, MYL(";"));
 	if (s[0] != MYL('.'))
 		s = MYL('.') + s;
 
@@ -133,6 +135,26 @@ tstring ModifyCommand(const tstring& command)
 	return command;
 }
 
+wstring GetNextArgOrShowError(size_t& i, 
+	size_t count, 
+	const CCommandLineString& cms,
+	const tstring option)
+{
+	if ((i + 1) == count)
+	{
+		ShowError(MYL("No argument for ") + option);
+		return tstring();
+	}
+	++i;
+	tstring next = cms.getArg(i);
+	if (next.empty())
+	{
+		ShowError(option + MYL(" is empty"));
+		return tstring();
+	}
+	return next;
+}
+
 enum TargetType
 {
 	TARGET_NONE,
@@ -155,195 +177,230 @@ int LibWinNiceMain(
 	bool showCommand = false;
 	bool exitifsetpriorityfailed = false;
 	bool detachNewProcess = false;
-
-	TargetType targetType = TARGET_NONE;
-	set<DWORD> targetIDs;
+	bool newProcess = false;
+	// TargetType targetType = TARGET_NONE;
 
 	size_t nSubcommandStartIndex = -1;
 	const size_t count = cms.getCount();
-	if (count <= 1)
-	{
-		ShowError(L"No arguments");
-		return 1;
-	}
-	for (size_t i = 1; i < count; ++i)
-	{
-		tstring option = cms.getArg(i);
-		if (false)
-			;
-		else if (option == MYL("--cpu-high"))
-			cpuPriority = CPU_HIGH;
-		else if (option == MYL("--cpu-abovenormal"))
-			cpuPriority = CPU_ABOVENORMAL;
-		else if (option == MYL("--cpu-normal"))
-			cpuPriority = CPU_NORMAL;
-		else if (option == MYL("--cpu-belownormal"))
-			cpuPriority = CPU_BELOWNORMAL;
-		else if (option == MYL("--cpu-idle"))
-			cpuPriority = CPU_IDLE;
-		else if (option == MYL("--cpu-default"))
-			cpuPriority = CPU_NONE;
+	set<DWORD> pidsToProcess;
 
-		else if (option == MYL("--io-high"))
-			ioPriority = IO_HIGH;
-		else if (option == MYL("--io-abovenormal"))
-			ioPriority = IO_ABOVENORMAL;
-		else if (option == MYL("--io-normal"))
-			ioPriority = IO_NORMAL;
-		else if (option == MYL("--io-belownormal"))
-			ioPriority = IO_BELOWNORMAL;
-		else if (option == MYL("--io-idle"))
-			ioPriority = IO_IDLE;
-		else if (option == MYL("--io-default"))
-			ioPriority = IO_NONE;
+	{  // ensure these 2 sets are in this scope
+		set<DWORD> targetIDsFromExe;
+		set<DWORD> targetPIDs;
 
-		else if (option == MYL("--mem-high"))
-			memPriority = MEMORY_HIGH;
-		else if (option == MYL("--mem-abovenormal"))
-			memPriority = MEMORY_ABOVENORMAL;
-		else if (option == MYL("--mem-normal"))
-			memPriority = MEMORY_NORMAL;
-		else if (option == MYL("--mem-belownormal"))
-			memPriority = MEMORY_BELOWNORMAL;
-		else if (option == MYL("--mem-idle"))
-			memPriority = MEMORY_IDLE;
-		else if (option == MYL("--mem-default"))
-			memPriority = MEMORY_NONE;
-
-		else if (option == MYL("--all-high")) {
-			cpuPriority = CPU_HIGH;
-			ioPriority = IO_HIGH;
-			memPriority = MEMORY_HIGH;
-		}
-		else if (option == MYL("--all-abovenormal")) {
-			cpuPriority = CPU_ABOVENORMAL;
-			ioPriority = IO_ABOVENORMAL;
-			memPriority = MEMORY_ABOVENORMAL;
-		}
-		else if (option == MYL("--all-normal")) {
-			cpuPriority = CPU_NORMAL;
-			ioPriority = IO_NORMAL;
-			memPriority = MEMORY_NORMAL;
-		}
-		else if (option == MYL("--all-belownormal")) {
-			cpuPriority = CPU_BELOWNORMAL;
-			ioPriority = IO_BELOWNORMAL;
-			memPriority = MEMORY_BELOWNORMAL;
-		}
-		else if (option == MYL("--all-idle")) {
-			cpuPriority = CPU_IDLE;
-			ioPriority = IO_IDLE;
-			memPriority = MEMORY_IDLE;
-		}
-
-
-		else if (option == MYL("--show-command"))
-			showCommand = true;
-		else if (option == MYL("--exit-if-setpriority-failed"))
-			exitifsetpriorityfailed = true;
-		else if (option == MYL("--detach-newprocess"))
-			detachNewProcess = true;
-
-
-		else if (option == MYL("--executable"))
+		if (count <= 1)
 		{
-			if ((i + 1) == count)
-			{
-				ShowError(MYL("No argument for --executable"));
-				return 1;
-			}
-			++i;
-			tstring exe = cms.getArg(i);
-			if (exe.empty())
-			{
-				ShowError(MYL("Executable is empty"));
-				return 1;
-			}
-			if (targetType != TARGET_NONE && targetType != TARGET_FIND_FROM_EXECUTABLE)
-			{
-				ShowError(MYL("Both --executable and --new-process could not be specified."));
-				return 1;
-			}
-			targetType = TARGET_FIND_FROM_EXECUTABLE;
-			set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
-			if (vs.empty())
-			{
-				tstringstream tss;
-				tss << MYL("\"") << exe << MYL("\"") << MYL(" ") << MYL("not found") << endl;
-				ShowError(tss);
-			}
-			targetIDs.insert(vs.begin(), vs.end());
-		}
-		else if (option == MYL("--new-process"))
-		{
-			if (targetType != TARGET_NONE)
-			{
-				ShowError(MYL("Both --executable and --new-process could not be specified."));
-				return 1;
-			}
-			targetType = TARGET_NEW_PROCESS;
-		}
-		else if (option == MYL("-h") || option == MYL("/h") ||
-			option == MYL("--help"))
-		{
-			ShowHelp();
-			return 0;
-		}
-		else if (option == op(L"--helpmore"))
-		{
-			ShowHelp(true);
-			return 0;
-		}
-		else if(option.size() > 1 && option[0]==MYL('-'))
-		{
-			wstringstream message;
-			message << (MYL("Unknown option:") + option) << endl;
-			message << GetHammingSuggest(option) << endl;
-			ShowError(message.str());
+			ShowError(L"No arguments");
 			return 1;
 		}
-		else
+		for (size_t i = 1; i < count; ++i)
 		{
-			if (option == MYL("-"))
+			tstring option = cms.getArg(i);
+			if (false)
+				;
+			else if (option == MYL("--cpu-high"))
+				cpuPriority = CPU_HIGH;
+			else if (option == MYL("--cpu-abovenormal"))
+				cpuPriority = CPU_ABOVENORMAL;
+			else if (option == MYL("--cpu-normal"))
+				cpuPriority = CPU_NORMAL;
+			else if (option == MYL("--cpu-belownormal"))
+				cpuPriority = CPU_BELOWNORMAL;
+			else if (option == MYL("--cpu-idle"))
+				cpuPriority = CPU_IDLE;
+			else if (option == MYL("--cpu-default"))
+				cpuPriority = CPU_NONE;
+
+			else if (option == MYL("--io-high"))
+				ioPriority = IO_HIGH;
+			else if (option == MYL("--io-abovenormal"))
+				ioPriority = IO_ABOVENORMAL;
+			else if (option == MYL("--io-normal"))
+				ioPriority = IO_NORMAL;
+			else if (option == MYL("--io-belownormal"))
+				ioPriority = IO_BELOWNORMAL;
+			else if (option == MYL("--io-idle"))
+				ioPriority = IO_IDLE;
+			else if (option == MYL("--io-default"))
+				ioPriority = IO_NONE;
+
+			else if (option == MYL("--mem-high"))
+				memPriority = MEMORY_HIGH;
+			else if (option == MYL("--mem-abovenormal"))
+				memPriority = MEMORY_HIGH;
+			else if (option == MYL("--mem-normal"))
+				memPriority = MEMORY_HIGH;
+			else if (option == MYL("--mem-belownormal"))
+				memPriority = MEMORY_BELOWNORMAL;
+			else if (option == MYL("--mem-idle"))
+				memPriority = MEMORY_IDLE;
+			else if (option == MYL("--mem-default"))
+				memPriority = MEMORY_NONE;
+
+			else if (option == MYL("--all-high")) {
+				cpuPriority = CPU_HIGH;
+				ioPriority = IO_HIGH;
+				memPriority = MEMORY_HIGH;  // Normal is HIGH
+			}
+			else if (option == MYL("--all-abovenormal")) {
+				cpuPriority = CPU_ABOVENORMAL;
+				ioPriority = IO_ABOVENORMAL;
+				memPriority = MEMORY_HIGH;  // Normal is HIGH
+			}
+			else if (option == MYL("--all-normal")) {
+				cpuPriority = CPU_NORMAL;
+				ioPriority = IO_NORMAL;
+				memPriority = MEMORY_HIGH;  // Normal is HIGH
+			}
+			else if (option == MYL("--all-belownormal")) {
+				cpuPriority = CPU_BELOWNORMAL;
+				ioPriority = IO_BELOWNORMAL;
+				memPriority = MEMORY_BELOWNORMAL;
+			}
+			else if (option == MYL("--all-idle")) {
+				cpuPriority = CPU_IDLE;
+				ioPriority = IO_IDLE;
+				memPriority = MEMORY_IDLE;
+			}
+
+
+			else if (option == MYL("--show-command"))
+				showCommand = true;
+			else if (option == MYL("--exit-if-setpriority-failed"))
+				exitifsetpriorityfailed = true;
+			else if (option == MYL("--detach-newprocess"))
+				detachNewProcess = true;
+
+
+			else if (option == MYL("--executable"))
 			{
-				// treat next argument as main arg
-				
-				if ((i + 1) == count)
+				tstring exe = GetNextArgOrShowError(i, count, cms, option);
+				if (exe.empty())
+					return 1;
+
+				//if (targetType != TARGET_NONE && targetType != TARGET_FIND_FROM_EXECUTABLE)
+				//{
+				//	ShowError(MYL("Both --executable and --new-process could not be specified."));
+				//	return 1;
+				//}
+				// targetType = TARGET_FIND_FROM_EXECUTABLE;
+				set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
+				if (vs.empty())
 				{
-					ShowError(MYL("Insufficient argument after '-'"));
+					tstringstream tss;
+					tss << MYL("\"") << exe << MYL("\"") << MYL(" ") << MYL("not found") << endl;
+					ShowError(tss);
+				}
+				targetIDsFromExe.insert(vs.begin(), vs.end());
+			}
+			else if (option == MYL("--pid"))
+			{
+				tstring pids = GetNextArgOrShowError(i, count, cms, option);
+				if (pids.empty())
+					return 1;
+
+				vector<tstring> vPids = stdwin32::stdSplitString(pids, MYL(","));
+				if (vPids.empty())
+				{
+					ShowError(MYL("Pid parsed empty"));
 					return 1;
 				}
-				++i;
-				option = cms.getArg(i);
 
-				// and fall through
+				// not yet set
+				assert(targetPIDs.empty());
+
+				// Check pid is a number
+				for (auto&& pid : vPids)
+				{
+					if (!stdIsTdigit(pid))
+					{
+						ShowError(string_format(MYL("pid %s is not a number"), pid.c_str()));
+						return 1;
+					}
+
+					// TODO: To tochar in osd
+					targetPIDs.insert(_wtol(pid.c_str()));
+				}
 			}
-			// --new-process is omittable
-			if (targetType != TARGET_NONE && targetType != TARGET_NEW_PROCESS)
+			else if (option == MYL("--new-process"))
 			{
-				ShowError(MYL("Both --executable and --new-process could not be specified."));
+				//if (targetType != TARGET_NONE)
+				//{
+				//	ShowError(MYL("Both --executable and --new-process could not be specified."));
+				//	return 1;
+				//}
+				// targetType = TARGET_NEW_PROCESS;
+				newProcess = true;
+			}
+			else if (option == MYL("-h") || option == MYL("/h") ||
+				option == MYL("--help"))
+			{
+				ShowHelp();
+				return 0;
+			}
+			else if (option == op(L"--helpmore"))
+			{
+				ShowHelp(true);
+				return 0;
+			}
+			else if (option.size() > 1 && option[0] == MYL('-'))
+			{
+				wstringstream message;
+				message << (MYL("Unknown option:") + option) << endl;
+				message << GetHammingSuggest(option) << endl;
+				ShowError(message.str());
 				return 1;
 			}
-			targetType = TARGET_NEW_PROCESS;
-			nSubcommandStartIndex = i;
-			break;
-		}
-	}
+			else
+			{
+				if (option == MYL("-"))
+				{
+					// treat next argument as main arg
 
-	if (targetType == TARGET_FIND_FROM_EXECUTABLE)
-	{
-		if (targetIDs.empty())
-		{
-			ShowError(MYL("Target process not found"));
-			return 1;
+					if ((i + 1) == count)
+					{
+						ShowError(MYL("Insufficient argument after '-'"));
+						return 1;
+					}
+					++i;
+					option = cms.getArg(i);
+
+					// and fall through
+				}
+				// --new-process is omittable
+				//if (targetType != TARGET_NONE && targetType != TARGET_NEW_PROCESS)
+				//{
+				//	ShowError(MYL("Both --executable and --new-process could not be specified."));
+				//	return 1;
+				//}
+				//targetType = TARGET_NEW_PROCESS;
+				nSubcommandStartIndex = i;
+				break;
+			}
 		}
+
+		// Set pid for processing
+	
+		pidsToProcess.insert(targetIDsFromExe.begin(), targetIDsFromExe.end());
+		pidsToProcess.insert(targetPIDs.begin(), targetPIDs.end());
+	}
+		
+	bool isProcessed = false;
+	if (!pidsToProcess.empty())
+	{
+		isProcessed = true;
+		//if (())
+		//{
+		//	ShowError(MYL("Target process not found"));
+		//	return 1;
+		//}
 		if (cpuPriority == CPU_NONE && ioPriority == IO_NONE && memPriority == MEMORY_NONE)
 		{
 			ShowError(MYL("No priorities specified"));
 			return 1;
 		}
 
-		for (auto&& dwProcessID : targetIDs)
+		for (auto&& dwProcessID : pidsToProcess)
 		{
 			int err = Ambiesoft::SetProirity(
 				dwProcessID,
@@ -352,7 +409,7 @@ int LibWinNiceMain(
 				memPriority);
 			if (err != 0)
 			{
-				ShowErrorWithLastError(err);
+				ShowErrorWithLastError(err, dwProcessID);
 
 				if (exitifsetpriorityfailed)
 				{
@@ -361,8 +418,10 @@ int LibWinNiceMain(
 			}
 		}
 	}
-	else if (targetType == TARGET_NEW_PROCESS)
+
+	if(newProcess)
 	{
+		isProcessed = true;
 		tstring newcommnad = cms.subString(nSubcommandStartIndex);
 		if (newcommnad.empty())
 		{
@@ -424,7 +483,7 @@ int LibWinNiceMain(
 				memPriority);
 			if (err != 0)
 			{
-				ShowErrorWithLastError(err);
+				ShowErrorWithLastError(err, dwProcessID);
 				if (exitifsetpriorityfailed)
 				{
 					TerminateProcess(hProcess, -1);
@@ -459,5 +518,9 @@ int LibWinNiceMain(
 		return dwExitCode;
 	}
 
+	if (!isProcessed)
+	{
+		ShowOutput(MYL("No operation to process"));
+	}
 	return 0;
 }

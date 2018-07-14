@@ -20,4 +20,5 @@ src/testtarget/x64/
 
 src/winnicew/Win32/
 src/winnicew/x64/
+src/winnicew/winnicew.vcxproj.user
 

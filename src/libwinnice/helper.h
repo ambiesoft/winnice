@@ -19,7 +19,7 @@ void ShowOutput(const tstringstream& s);
 void ShowError(const tchar* pMessage);
 void ShowError(const tstring& message);
 void ShowError(const tstringstream& message);
-void ShowErrorWithLastError(int err);
+void ShowErrorWithLastError(int err, DWORD pid);
 
 
 void ShowHelp(bool more=false);

@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp" />
     <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp" />
     <ClCompile Include="..\..\..\lsMisc\SetPrority_win.cpp" />
+    <ClCompile Include="..\..\..\lsMisc\stdosd\stdosd.cpp" />
     <ClCompile Include="..\..\..\lsMisc\stdwin32\stdwin32.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="helper.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\lsMisc\GetLastErrorString.h" />
     <ClInclude Include="..\..\..\lsMisc\SetPrority.h" />
+    <ClInclude Include="..\..\..\lsMisc\stdosd\stdosd.h" />
     <ClInclude Include="..\..\..\lsMisc\stdwin32\stdwin32.h" />
     <ClInclude Include="..\..\..\lsMisc\tstring.h" />
     <ClInclude Include="helper.h" />
