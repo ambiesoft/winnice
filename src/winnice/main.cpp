@@ -33,7 +33,10 @@ void showError(const wchar_t* pMessage)
 {
 	wcerr << pMessage;
 }
-int main()
+int wmain(int argc, const wchar_t** argv)
 {
-	return LibWinNiceMain(false, showOutput, showError);
+	return LibWinNiceMainW(false,
+		argc,
+		argv,
+		showOutput, showError);
 }

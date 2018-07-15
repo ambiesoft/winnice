@@ -29,19 +29,19 @@
 
 #include "libwinnice.h"
 
-extern WNUShowInformation gUFShowOutput;
-extern WNUShowInformation gUFShowError;
+extern WNUShowInformationW gUFShowOutputW;
+extern WNUShowInformationW gUFShowErrorW;
 
-void ShowOutput(const tchar* pMessage);
-void ShowOutput(const tstring& s);
-void ShowOutput(const tstringstream& s);
-
-
-
-void ShowError(const tchar* pMessage);
-void ShowError(const tstring& message);
-void ShowError(const tstringstream& message);
-void ShowErrorWithLastError(int err, DWORD pid);
+void ShowOutputW(const wchar_t* pMessage);
+void ShowOutputW(const std::wstring& s);
+void ShowOutputW(const std::wstringstream& s);
 
 
-void ShowHelp(bool more=false);
+
+void ShowErrorW(const wchar_t* pMessage);
+void ShowErrorW(const std::wstring& message);
+void ShowErrorW(const std::wstringstream& message);
+void ShowErrorWithLastErrorW(int err, DWORD pid);
+
+
+void ShowHelpW(bool more=false);

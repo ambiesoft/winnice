@@ -153,9 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="winnicew.h" />
   </ItemGroup>
   <ItemGroup>
@@ -166,13 +164,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="winnicew.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="winnicew.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico" />
-    <Image Include="winnicew.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libwinnice\libwinnice.vcxproj">

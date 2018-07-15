@@ -3,3 +3,4 @@ SUBDIRS = \
             libwinnice \
             testtarget \
             winnice \
+            winnicew

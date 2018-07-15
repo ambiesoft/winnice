@@ -18,6 +18,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testtarget", "testtarget\te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winnicew", "winnicew\winnicew.vcxproj", "{8FF5051E-11A2-4AE3-951E-9CA134153AED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testwinnice", "testwinnice\testwinnice.vcxproj", "{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C8C2482B-ED42-49D9-B013-43C38FD31FA7} = {C8C2482B-ED42-49D9-B013-43C38FD31FA7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -82,6 +87,16 @@ Global
 		{8FF5051E-11A2-4AE3-951E-9CA134153AED}.zzzDistConfig|x64.Build.0 = Release|x64
 		{8FF5051E-11A2-4AE3-951E-9CA134153AED}.zzzDistConfig|x86.ActiveCfg = Release|Win32
 		{8FF5051E-11A2-4AE3-951E-9CA134153AED}.zzzDistConfig|x86.Build.0 = Release|Win32
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Debug|x64.ActiveCfg = Debug|x64
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Debug|x64.Build.0 = Debug|x64
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Debug|x86.ActiveCfg = Debug|Win32
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Debug|x86.Build.0 = Debug|Win32
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Release|x64.ActiveCfg = Release|x64
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Release|x64.Build.0 = Release|x64
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Release|x86.ActiveCfg = Release|Win32
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.Release|x86.Build.0 = Release|Win32
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.zzzDistConfig|x64.ActiveCfg = Release|x64
+		{0B254047-8AB8-48A4-B2B4-D1CEB54290C0}.zzzDistConfig|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

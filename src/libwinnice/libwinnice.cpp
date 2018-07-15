@@ -40,7 +40,6 @@
 #include "../../../lsMisc/GetLastErrorString.h"
 #include "../../../lsMisc/tstring.h"
 #include "../../../lsMisc/stlScopedClear.h"
-#include "../../../lsMisc/stdwin32/stdwin32.h"
 #include "../../../lsMisc/stdosd/stdosd.h"
 
 
@@ -50,7 +49,7 @@
 
 
 using namespace Ambiesoft;
-using namespace stdwin32;
+// using namespace stdwin32;
 using namespace Ambiesoft::stdosd;
 using namespace std;
 
@@ -129,7 +128,7 @@ bool IsExecutableExtension(stringtype s)
 		return false;
 
 	stringtype env = stdGetEnv(stringtype(MYL("PATHEXT")));
-	vector<stringtype> vExts = stdwin32::stdSplitString(env, MYL(";"));
+	vector<stringtype> vExts = stdSplitString(env, MYL(";"));
 	if (s[0] != MYL('.'))
 		s = MYL('.') + s;
 
@@ -157,7 +156,23 @@ tstring ModifyCommand(const tstring& command)
 	return command;
 }
 
-wstring GetNextArgOrShowError(size_t& i, 
+inline void ShowOutput(const wstring& s)
+{
+	ShowOutputW(s);
+}
+inline void ShowOutput(const wstringstream& s)
+{
+	ShowOutputW(s);
+}
+inline void ShowError(const wstring& s)
+{
+	ShowErrorW(s);
+}
+inline void ShowError(const wstringstream& s)
+{
+	ShowErrorW(s);
+}
+wstring GetNextArgOrShowError(size_t& i,
 	size_t count, 
 	const CCommandLineString& cms,
 	const tstring option)
@@ -183,15 +198,17 @@ enum TargetType
 	TARGET_FIND_FROM_EXECUTABLE,
 	TARGET_NEW_PROCESS,
 };
-int LibWinNiceMain(
+int LibWinNiceMainW(
 	bool bGui,
-	WNUShowInformation wnuShowOutput,
-	WNUShowInformation wnuShowError)
+	int argc,
+	const wchar_t* const* argv,
+	WNUShowInformationW wnuShowOutputW,
+	WNUShowInformationW wnuShowErrorW)
 {
-	gUFShowOutput = wnuShowOutput;
-	gUFShowError = wnuShowError;
+	gUFShowOutputW = wnuShowOutputW;
+	gUFShowErrorW = wnuShowErrorW;
 
-	CCommandLineStringBase<tchar> cms;
+	CCommandLineStringBase<tchar> cms(argc,argv);
 
 	CPUPRIORITY cpuPriority = CPUPRIORITY::CPU_NONE;
 	IOPRIORITY ioPriority = IOPRIORITY::IO_NONE;
@@ -324,7 +341,7 @@ int LibWinNiceMain(
 				if (pids.empty())
 					return 1;
 
-				vector<tstring> vPids = stdwin32::stdSplitString(pids, MYL(","));
+				vector<tstring> vPids = stdSplitString(pids, MYL(","));
 				if (vPids.empty())
 				{
 					ShowError(MYL("Pid parsed empty"));
@@ -339,7 +356,7 @@ int LibWinNiceMain(
 				{
 					if (!stdIsTdigit(pid))
 					{
-						ShowError(string_format(MYL("pid %s is not a number"), pid.c_str()));
+						ShowError(stdFormat(MYL("pid %s is not a number"), pid.c_str()));
 						return 1;
 					}
 
@@ -360,12 +377,12 @@ int LibWinNiceMain(
 			else if (option == MYL("-h") || option == MYL("/h") ||
 				option == MYL("--help"))
 			{
-				ShowHelp();
+				ShowHelpW();
 				return 0;
 			}
 			else if (option == op(L"--helpmore"))
 			{
-				ShowHelp(true);
+				ShowHelpW(true);
 				return 0;
 			}
 			else if (option.size() > 1 && option[0] == MYL('-'))
@@ -434,7 +451,7 @@ int LibWinNiceMain(
 				memPriority);
 			if (err != 0)
 			{
-				ShowErrorWithLastError(err, dwProcessID);
+				ShowErrorWithLastErrorW(err, dwProcessID);
 
 				if (exitifsetpriorityfailed)
 				{
@@ -511,7 +528,7 @@ int LibWinNiceMain(
 				memPriority);
 			if (err != 0)
 			{
-				ShowErrorWithLastError(err, dwProcessID);
+				ShowErrorWithLastErrorW(err, dwProcessID);
 				if (exitifsetpriorityfailed)
 				{
 					TerminateProcess(hProcess, -1);
@@ -552,3 +569,10 @@ int LibWinNiceMain(
 	}
 	return 0;
 }
+//int LibWinNiceMainA(
+//	bool bGui,
+//	WNUShowInformationA wnuShowOutputA,
+//	WNUShowInformationA wnuShowErrorA)
+//{
+//	return 0;
+//}

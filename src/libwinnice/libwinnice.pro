@@ -29,7 +29,8 @@ SOURCES += \
         libwinnice.cpp \
     ../../../lsMisc/CreateProcessCommon.cpp \
     ../../../lsMisc/GetLastErrorString.cpp \
-    ../../../lsMisc/stdwin32/stdwin32.cpp
+    ../../../lsMisc/stdwin32/stdwin32.cpp \
+    helper.cpp
 
 HEADERS += \
         libwinnice.h \
@@ -39,7 +40,8 @@ HEADERS += \
     mytype.h \
     ../../../lsMisc/CreateProcessCommon.h \
     ../../../lsMisc/GetLastErrorString.h \
-    ../../../lsMisc/stdwin32/stdwin32.h
+    ../../../lsMisc/stdwin32/stdwin32.h \
+    helper.h
 
 unix {
     target.path = /usr/lib

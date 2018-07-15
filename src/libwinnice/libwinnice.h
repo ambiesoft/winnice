@@ -25,11 +25,14 @@
 
 #include "libwinnice_global.h"
 
-typedef void(*WNUShowInformation)(const wchar_t* pMessage);
+typedef void(*WNUShowInformationA)(const char* pMessage);
+typedef void(*WNUShowInformationW)(const wchar_t* pMessage);
 
-LIBWINNICESHARED_EXPORT int LibWinNiceMain(
+LIBWINNICESHARED_EXPORT int LibWinNiceMainW(
 	bool bGui,
-	WNUShowInformation wnuShowOutput,
-	WNUShowInformation wnuShowError);
+	int argc,
+	const wchar_t* const* argv,
+	WNUShowInformationW wnuShowOutputW,
+	WNUShowInformationW wnuShowErrorW);
 
 #endif // LIBWINNICE_H

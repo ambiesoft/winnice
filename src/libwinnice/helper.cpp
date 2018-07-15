@@ -32,58 +32,58 @@
 
 
 
-WNUShowInformation gUFShowOutput;
-WNUShowInformation gUFShowError;
+WNUShowInformationW gUFShowOutputW;
+WNUShowInformationW gUFShowErrorW;
 
 #define CHECK_USERFUNC(func) do { if(!func) {return;}} while(false)
 
 using namespace std;
 using namespace Ambiesoft;
 
-void ShowOutput(const tchar* pMessage)
+void ShowOutputW(const wchar_t* pMessage)
 {
-	CHECK_USERFUNC(gUFShowOutput);
-	gUFShowOutput(pMessage);
+	CHECK_USERFUNC(gUFShowOutputW);
+	gUFShowOutputW(pMessage);
 }
-void ShowOutput(const tstring& s)
+void ShowOutputW(const std::wstring& s)
 {
-	CHECK_USERFUNC(gUFShowOutput);
-	ShowOutput(s.c_str());
+	CHECK_USERFUNC(gUFShowOutputW);
+	ShowOutputW(s.c_str());
 }
-void ShowOutput(const tstringstream& s)
+void ShowOutputW(const std::wstringstream& s)
 {
-	CHECK_USERFUNC(gUFShowOutput);
-	ShowOutput(s.str());
+	CHECK_USERFUNC(gUFShowOutputW);
+	ShowOutputW(s.str());
 }
 
 
-void ShowError(const tchar* pMessage)
+void ShowErrorW(const wchar_t* pMessage)
 {
-	CHECK_USERFUNC(gUFShowError);
-	gUFShowError(pMessage);
+	CHECK_USERFUNC(gUFShowErrorW);
+	gUFShowErrorW(pMessage);
 }
-void ShowError(const tstring& message)
+void ShowErrorW(const std::wstring& message)
 {
-	CHECK_USERFUNC(gUFShowError);
-	ShowError(message.c_str());
+	CHECK_USERFUNC(gUFShowErrorW);
+	ShowErrorW(message.c_str());
 }
-void ShowError(const tstringstream& message)
+void ShowErrorW(const std::wstringstream& message)
 {
-	CHECK_USERFUNC(gUFShowError);
-	ShowError(message.str());
+	CHECK_USERFUNC(gUFShowErrorW);
+	ShowErrorW(message.str());
 }
-void ShowErrorWithLastError(int err, DWORD pid)
+void ShowErrorWithLastErrorW(int err, DWORD pid)
 {
-	tstring errorMessage = GetLastErrorString(err);
+	wstring errorMessage = GetLastErrorString(err);
 	if (!errorMessage.empty())
 		errorMessage = MYL(": \"") + errorMessage + MYL("\"");
 	wstringstream wss;
 	wss << L"Failed to set priority of process " << pid << " with error" << MYL("(") << err << MYL(")") << errorMessage << endl;
-	ShowError(wss.str());
+	ShowErrorW(wss.str());
 }
-void ShowHelp(bool more)
+void ShowHelpW(bool more)
 {
-	CHECK_USERFUNC(gUFShowOutput);
+	CHECK_USERFUNC(gUFShowOutputW);
 
 	wstringstream wss;
 	wss << APPNAME << endl;
@@ -122,7 +122,7 @@ void ShowHelp(bool more)
 		wss << endl;
 		wss << L"Run with '--helpmore' for more help" << endl;
 
-		gUFShowOutput(wss.str().c_str());
+		gUFShowOutputW(wss.str().c_str());
 		return;
 	}
 
@@ -144,5 +144,5 @@ void ShowHelp(bool more)
 	wss << L"  (Omitable) create a new process and set priority" << endl;
 	wss << endl;
 
-	gUFShowOutput(wss.str().c_str());
+	gUFShowOutputW(wss.str().c_str());
 }
