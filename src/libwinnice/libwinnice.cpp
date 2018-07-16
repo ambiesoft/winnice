@@ -24,8 +24,8 @@
 //
 
 #include "stdafx.h"
-
-
+ 
+ 
 
 #include <Windows.h>
 #include <tlhelp32.h>
@@ -34,7 +34,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "../../../lsMisc/SetPrority.h"
+#include "../../../lsMisc/stdosd/SetPrority.h"
 #include "../../../lsMisc/CommandLineString.h"
 #include "../../../lsMisc/CreateProcessCommon.h"
 #include "../../../lsMisc/GetLastErrorString.h"
@@ -49,7 +49,6 @@
 
 
 using namespace Ambiesoft;
-// using namespace stdwin32;
 using namespace Ambiesoft::stdosd;
 using namespace std;
 
@@ -118,7 +117,8 @@ basic_string<chartype> stdGetEnv(const basic_string<chartype>& s)
 {
 	chartype buff[1024]; buff[0] = 0;
 	size_t req;
-	errno_t err = _wgetenv_s(&req, buff, s.c_str());
+    _wgetenv_s(&req, buff, s.c_str());
+
 	return buff;
 }
 template<typename stringtype>
@@ -198,6 +198,8 @@ enum TargetType
 	TARGET_FIND_FROM_EXECUTABLE,
 	TARGET_NEW_PROCESS,
 };
+
+
 int LibWinNiceMainW(
 	bool bGui,
 	int argc,
@@ -210,9 +212,9 @@ int LibWinNiceMainW(
 
 	CCommandLineStringBase<tchar> cms(argc,argv);
 
-	CPUPRIORITY cpuPriority = CPUPRIORITY::CPU_NONE;
-	IOPRIORITY ioPriority = IOPRIORITY::IO_NONE;
-	MEMORYPRIORITY memPriority = MEMORYPRIORITY::MEMORY_NONE;
+	Process::CPUPRIORITY cpuPriority = Process::CPUPRIORITY::CPU_NONE;
+	Process::IOPRIORITY ioPriority = Process::IOPRIORITY::IO_NONE;
+	Process::MEMORYPRIORITY memPriority = Process::MEMORYPRIORITY::MEMORY_NONE;
 
 	bool showCommand = false;
 	bool exitifsetpriorityfailed = false;
@@ -239,68 +241,68 @@ int LibWinNiceMainW(
 			if (false)
 				;
 			else if (option == MYL("--cpu-high"))
-				cpuPriority = CPU_HIGH;
+				cpuPriority = Process::CPU_HIGH;
 			else if (option == MYL("--cpu-abovenormal"))
-				cpuPriority = CPU_ABOVENORMAL;
+				cpuPriority = Process::CPU_ABOVENORMAL;
 			else if (option == MYL("--cpu-normal"))
-				cpuPriority = CPU_NORMAL;
+				cpuPriority = Process::CPU_NORMAL;
 			else if (option == MYL("--cpu-belownormal"))
-				cpuPriority = CPU_BELOWNORMAL;
+				cpuPriority = Process::CPU_BELOWNORMAL;
 			else if (option == MYL("--cpu-idle"))
-				cpuPriority = CPU_IDLE;
+				cpuPriority = Process::CPU_IDLE;
 			else if (option == MYL("--cpu-default"))
-				cpuPriority = CPU_NONE;
+				cpuPriority = Process::CPU_NONE;
 
 			else if (option == MYL("--io-high"))
-				ioPriority = IO_HIGH;
+				ioPriority = Process::IO_NORMAL; // IO_HIGH;
 			else if (option == MYL("--io-abovenormal"))
-				ioPriority = IO_ABOVENORMAL;
+				ioPriority = Process::IO_NORMAL; // IO_ABOVENORMAL;
 			else if (option == MYL("--io-normal"))
-				ioPriority = IO_NORMAL;
+				ioPriority = Process::IO_NORMAL;
 			else if (option == MYL("--io-belownormal"))
-				ioPriority = IO_BELOWNORMAL;
+				ioPriority = Process::IO_BELOWNORMAL;
 			else if (option == MYL("--io-idle"))
-				ioPriority = IO_IDLE;
+				ioPriority = Process::IO_IDLE;
 			else if (option == MYL("--io-default"))
-				ioPriority = IO_NONE;
+				ioPriority = Process::IO_NONE;
 
 			else if (option == MYL("--mem-high"))
-				memPriority = MEMORY_HIGH;
+				memPriority = Process::MEMORY_HIGH;
 			else if (option == MYL("--mem-abovenormal"))
-				memPriority = MEMORY_HIGH;
+				memPriority = Process::MEMORY_HIGH;
 			else if (option == MYL("--mem-normal"))
-				memPriority = MEMORY_HIGH;
+				memPriority = Process::MEMORY_HIGH;
 			else if (option == MYL("--mem-belownormal"))
-				memPriority = MEMORY_BELOWNORMAL;
+				memPriority = Process::MEMORY_BELOWNORMAL;
 			else if (option == MYL("--mem-idle"))
-				memPriority = MEMORY_IDLE;
+				memPriority = Process::MEMORY_IDLE;
 			else if (option == MYL("--mem-default"))
-				memPriority = MEMORY_NONE;
+				memPriority = Process::MEMORY_NONE;
 
 			else if (option == MYL("--all-high")) {
-				cpuPriority = CPU_HIGH;
-				ioPriority = IO_HIGH;
-				memPriority = MEMORY_HIGH;  // Normal is HIGH
+				cpuPriority = Process::CPU_HIGH;
+				ioPriority = Process::IO_NORMAL; // IO_HIGH;
+				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
 			}
 			else if (option == MYL("--all-abovenormal")) {
-				cpuPriority = CPU_ABOVENORMAL;
-				ioPriority = IO_ABOVENORMAL;
-				memPriority = MEMORY_HIGH;  // Normal is HIGH
+				cpuPriority = Process::CPU_ABOVENORMAL;
+				ioPriority = Process::IO_NORMAL; // IO_ABOVENORMAL;
+				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
 			}
 			else if (option == MYL("--all-normal")) {
-				cpuPriority = CPU_NORMAL;
-				ioPriority = IO_NORMAL;
-				memPriority = MEMORY_HIGH;  // Normal is HIGH
+				cpuPriority = Process::CPU_NORMAL;
+				ioPriority = Process::IO_NORMAL;
+				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
 			}
 			else if (option == MYL("--all-belownormal")) {
-				cpuPriority = CPU_BELOWNORMAL;
-				ioPriority = IO_BELOWNORMAL;
-				memPriority = MEMORY_BELOWNORMAL;
+				cpuPriority = Process::CPU_BELOWNORMAL;
+				ioPriority = Process::IO_BELOWNORMAL;
+				memPriority = Process::MEMORY_BELOWNORMAL;
 			}
 			else if (option == MYL("--all-idle")) {
-				cpuPriority = CPU_IDLE;
-				ioPriority = IO_IDLE;
-				memPriority = MEMORY_IDLE;
+				cpuPriority = Process::CPU_IDLE;
+				ioPriority = Process::IO_IDLE;
+				memPriority = Process::MEMORY_IDLE;
 			}
 
 
@@ -436,28 +438,32 @@ int LibWinNiceMainW(
 		//	ShowError(MYL("Target process not found"));
 		//	return 1;
 		//}
-		if (cpuPriority == CPU_NONE && ioPriority == IO_NONE && memPriority == MEMORY_NONE)
+		if (cpuPriority == Process::CPU_NONE && 
+			ioPriority == Process::IO_NONE && 
+			memPriority == Process::MEMORY_NONE)
 		{
 			ShowError(MYL("No priorities specified"));
 			return 1;
 		}
 
+		tstringstream errorMessage;
+		int err;
 		for (auto&& dwProcessID : pidsToProcess)
 		{
-			int err = Ambiesoft::SetProirity(
-				dwProcessID,
-				cpuPriority,
-				ioPriority,
-				memPriority);
-			if (err != 0)
-			{
-				ShowErrorWithLastErrorW(err, dwProcessID);
-
-				if (exitifsetpriorityfailed)
-				{
-					return 1;
-				}
-			}
+            err = DoSetPriority(dwProcessID,
+                cpuPriority,ioPriority,memPriority,
+                exitifsetpriorityfailed,
+                errorMessage);
+            if(err != 0 && exitifsetpriorityfailed)
+            {
+                ShowError(errorMessage);
+                return err;
+            }
+        }
+		if (err != 0)
+		{
+			ShowError(errorMessage);
+			return err;
 		}
 	}
 
@@ -519,20 +525,22 @@ int LibWinNiceMainW(
 			}
 		}
 
-		if (!(cpuPriority == CPU_NONE && ioPriority == IO_NONE && memPriority == MEMORY_NONE))
+		if (!(cpuPriority == Process::CPU_NONE && 
+			ioPriority == Process::IO_NONE && 
+			memPriority == Process::MEMORY_NONE))
 		{
-			int err = Ambiesoft::SetProirity(
-				dwProcessID,
-				cpuPriority,
-				ioPriority,
-				memPriority);
+            tstringstream errorMessage;
+            int err = DoSetPriority(dwProcessID,
+                          cpuPriority,ioPriority,memPriority,
+                          exitifsetpriorityfailed,
+                          errorMessage);
 			if (err != 0)
 			{
-				ShowErrorWithLastErrorW(err, dwProcessID);
+                ShowError(errorMessage);
 				if (exitifsetpriorityfailed)
 				{
 					TerminateProcess(hProcess, -1);
-					return 1;
+                    return err;
 				}
 			}
 		}

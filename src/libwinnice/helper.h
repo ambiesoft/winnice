@@ -22,12 +22,15 @@
 
 #pragma once
 
+#include "libwinnice.h"
+#include "../../../lsMisc/stdosd/SetPrority.h"
+
 #define MYL(s) L ## s
 
 #define APPNAME MYL("winnice")
-#define APPVERSION MYL("1.0.0")
+#define APPVERSION MYL("1.0.2")
 
-#include "libwinnice.h"
+
 
 extern WNUShowInformationW gUFShowOutputW;
 extern WNUShowInformationW gUFShowErrorW;
@@ -41,7 +44,14 @@ void ShowOutputW(const std::wstringstream& s);
 void ShowErrorW(const wchar_t* pMessage);
 void ShowErrorW(const std::wstring& message);
 void ShowErrorW(const std::wstringstream& message);
-void ShowErrorWithLastErrorW(int err, DWORD pid);
+tstring GetErrorWithLastErrorW(int err, DWORD pid);
 
 
 void ShowHelpW(bool more=false);
+
+int DoSetPriority(DWORD dwProcessID,
+        Ambiesoft::stdosd::Process::CPUPRIORITY cpuPriority,
+		Ambiesoft::stdosd::Process::IOPRIORITY ioPriority,
+		Ambiesoft::stdosd::Process::MEMORYPRIORITY memPriority,
+        bool exitifsetpriorityfailed,
+        tstringstream& errorMessage);

@@ -30,7 +30,7 @@
 
 #include "helper.h"
 
-
+using namespace Ambiesoft::stdosd;
 
 WNUShowInformationW gUFShowOutputW;
 WNUShowInformationW gUFShowErrorW;
@@ -72,14 +72,14 @@ void ShowErrorW(const std::wstringstream& message)
 	CHECK_USERFUNC(gUFShowErrorW);
 	ShowErrorW(message.str());
 }
-void ShowErrorWithLastErrorW(int err, DWORD pid)
+tstring GetErrorWithLastErrorW(int err, DWORD pid)
 {
 	wstring errorMessage = GetLastErrorString(err);
 	if (!errorMessage.empty())
 		errorMessage = MYL(": \"") + errorMessage + MYL("\"");
 	wstringstream wss;
 	wss << L"Failed to set priority of process " << pid << " with error" << MYL("(") << err << MYL(")") << errorMessage << endl;
-	ShowErrorW(wss.str());
+    return wss.str();
 }
 void ShowHelpW(bool more)
 {
@@ -94,7 +94,8 @@ void ShowHelpW(bool more)
 	wss << L"  [--io-high | --io-abovenormal | --io-normal | --io-belownormal | --io-idle | --io-default]" << endl;
 	wss << L"  [--mem-high | --mem-abovenormal | --mem-normal | --mem-belownormal | --mem-idle | --mem-default]" << endl;
 	wss << L"  [--all-abovenormal | --all-normal | --all-belownormal | --all-idle]" << endl;
-	wss << L"  Currenly, '--mem-high', '--mem-abovenormal' and '--mem-normal' is equal to '--mem-high'" << endl;
+	wss << L"  Currenly, '--io-high' and '--io-abovenormal' is equal to '--io-normal'" << endl;
+	wss << L"  Likewise, '--mem-abovenormal' and '--mem-normal' is equal to '--mem-high'" << endl;
 	wss << endl;
 	wss << L"  [--show-command]" << endl;
 	wss << L"  Show the command for creating a new process" << endl;
@@ -145,4 +146,73 @@ void ShowHelpW(bool more)
 	wss << endl;
 
 	gUFShowOutputW(wss.str().c_str());
+}
+
+
+int DoSetPriority(DWORD dwProcessID,
+        Process::CPUPRIORITY cpuPriority,
+	Process::IOPRIORITY ioPriority,
+	Process::MEMORYPRIORITY memPriority,
+        bool exitifsetpriorityfailed,
+        tstringstream& errorMessage)
+{
+    int lastError = 0;
+    int err;
+
+    // CPU
+    err = Process::SetProirity(
+        dwProcessID,
+        cpuPriority,
+		Process::IO_NONE,
+		Process::MEMORY_NONE);
+    if (err != 0)
+    {
+        lastError = err;
+        errorMessage << MYL("CPU:") << GetErrorWithLastErrorW(err, dwProcessID) << endl;
+        if (exitifsetpriorityfailed)
+        {
+            return err;
+        }
+    }
+
+
+
+    // IO
+    err = Process::SetProirity(
+        dwProcessID,
+		Process::CPU_NONE,
+        ioPriority,
+		Process::MEMORY_NONE);
+    if (err != 0)
+    {
+        lastError = err;
+        errorMessage << MYL("IO:") << GetErrorWithLastErrorW(err, dwProcessID) << endl;
+
+        if (exitifsetpriorityfailed)
+        {
+            return err;
+        }
+    }
+
+
+
+    // MEMORY
+    err = Process::SetProirity(
+        dwProcessID,
+		Process::CPU_NONE,
+		Process::IO_NONE,
+        memPriority);
+    if (err != 0)
+    {
+        lastError = err;
+        errorMessage << MYL("Memory:") << GetErrorWithLastErrorW(err, dwProcessID) << endl;
+
+        if (exitifsetpriorityfailed)
+        {
+            return err;
+        }
+    }
+
+
+    return lastError;
 }

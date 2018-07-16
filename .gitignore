@@ -1,24 +1,33 @@
-build-winnice*/
+build-*/
+
 src/.vs/
 src/Debug/
 src/Release/
+
+
 src/libwinnice/Win32/
-src/libwinnice/x64/
-src/winnice/Win32/
-src/winnice/winnice.vcxproj.user
 src/libwinnice/libwinnice.vcxproj.user
-src/winnice/x64/
-src/winnicesolution.pro.user
-src/zzzDist/Release/
-src/zzzDist/x64/
-src/zzzDist/zzzDist.vcxproj.user
+src/libwinnice/x64/
 
 src/testtarget/Debug/
 src/testtarget/Release/
 src/testtarget/testtarget.vcxproj.user
 src/testtarget/x64/
 
+src/testwinnice/Debug/
+src/testwinnice/testwinnice.vcxproj.user
+
+src/winnice/Win32/
+src/winnice/winnice.vcxproj.user
+src/winnice/x64/
+
+src/winnicesolution.pro.user
+
 src/winnicew/Win32/
-src/winnicew/x64/
 src/winnicew/winnicew.vcxproj.user
+src/winnicew/x64/
+
+src/zzzDist/Release/
+src/zzzDist/x64/
+src/zzzDist/zzzDist.vcxproj.user
 

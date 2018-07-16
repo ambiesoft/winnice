@@ -13,18 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\lsMisc">
+      <UniqueIdentifier>{80c358b3-6810-4e78-8bb8-44ed5ced31cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lsMisc\stdosd">
+      <UniqueIdentifier>{82da1de3-f76f-4004-bfdc-3ea68cf7b472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lsMisc">
+      <UniqueIdentifier>{5410729f-a34e-4912-a7d0-2a9ff220dcd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lsMisc\stdosd">
+      <UniqueIdentifier>{4f97badf-edca-4e73-9bb4-114af9e4e488}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libwinnice.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\SetPrority_win.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
@@ -39,18 +42,21 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp">
+      <Filter>Source Files\lsMisc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\stdosd\SetPrority_win.cpp">
+      <Filter>Source Files\lsMisc\stdosd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp">
+      <Filter>Source Files\lsMisc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\lsMisc\SetPrority.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libwinnice.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\GetLastErrorString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libwinnice_global.h">
@@ -59,11 +65,20 @@
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lsMisc\GetLastErrorString.h">
+      <Filter>Header Files\lsMisc</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\lsMisc\tstring.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\lsMisc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lsMisc\stdosd\SetPrority.h">
+      <Filter>Header Files\lsMisc\stdosd</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lsMisc\stdosd\stdosd.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\lsMisc\stdosd</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lsMisc\CreateProcessCommon.h">
+      <Filter>Header Files\lsMisc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
