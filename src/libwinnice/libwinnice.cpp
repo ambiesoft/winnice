@@ -220,13 +220,13 @@ int LibWinNiceMainW(
 	bool exitifsetpriorityfailed = false;
 	bool detachNewProcess = bGui ? true : false;
 	bool newProcess = false;
-	// TargetType targetType = TARGET_NONE;
 
 	size_t nSubcommandStartIndex = -1;
 	const size_t count = cms.getCount();
 	set<DWORD> pidsToProcess;
 
-	{  // ensure these 2 sets are in this scope
+	{
+		// ensure these 2 sets are in this scope
 		set<DWORD> targetIDsFromExe;
 		set<DWORD> targetPIDs;
 
@@ -281,18 +281,18 @@ int LibWinNiceMainW(
 
 			else if (option == MYL("--all-high")) {
 				cpuPriority = Process::CPU_HIGH;
-				ioPriority = Process::IO_NORMAL; // IO_HIGH;
-				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
+				ioPriority = Process::IO_NORMAL;
+				memPriority = Process::MEMORY_HIGH;
 			}
 			else if (option == MYL("--all-abovenormal")) {
 				cpuPriority = Process::CPU_ABOVENORMAL;
-				ioPriority = Process::IO_NORMAL; // IO_ABOVENORMAL;
-				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
+				ioPriority = Process::IO_NORMAL;
+				memPriority = Process::MEMORY_HIGH;
 			}
 			else if (option == MYL("--all-normal")) {
 				cpuPriority = Process::CPU_NORMAL;
 				ioPriority = Process::IO_NORMAL;
-				memPriority = Process::MEMORY_HIGH;  // Normal is HIGH
+				memPriority = Process::MEMORY_HIGH;
 			}
 			else if (option == MYL("--all-belownormal")) {
 				cpuPriority = Process::CPU_BELOWNORMAL;
@@ -305,7 +305,6 @@ int LibWinNiceMainW(
 				memPriority = Process::MEMORY_IDLE;
 			}
 
-
 			else if (option == MYL("--show-command"))
 				showCommand = true;
 			else if (option == MYL("--exit-if-setpriority-failed"))
@@ -315,19 +314,12 @@ int LibWinNiceMainW(
 			else if (option == MYL("--wait-newprocess"))
 				detachNewProcess = false;
 
-
 			else if (option == MYL("--executable"))
 			{
 				tstring exe = GetNextArgOrShowError(i, count, cms, option);
 				if (exe.empty())
 					return 1;
 
-				//if (targetType != TARGET_NONE && targetType != TARGET_FIND_FROM_EXECUTABLE)
-				//{
-				//	ShowError(MYL("Both --executable and --new-process could not be specified."));
-				//	return 1;
-				//}
-				// targetType = TARGET_FIND_FROM_EXECUTABLE;
 				set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
 				if (vs.empty())
 				{
@@ -368,15 +360,15 @@ int LibWinNiceMainW(
 			}
 			else if (option == MYL("--new-process"))
 			{
-				//if (targetType != TARGET_NONE)
-				//{
-				//	ShowError(MYL("Both --executable and --new-process could not be specified."));
-				//	return 1;
-				//}
-				// targetType = TARGET_NEW_PROCESS;
 				newProcess = true;
 			}
-			else if (option == MYL("-h") || option == MYL("/h") ||
+			else if (option == MYL("-v"))
+			{
+				ShowVersionW();
+				return 0;
+			}
+			else if (option == MYL("-h") || 
+				option == MYL("/h") ||
 				option == MYL("--help"))
 			{
 				ShowHelpW();

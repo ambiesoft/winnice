@@ -28,7 +28,7 @@
 #define MYL(s) L ## s
 
 #define APPNAME MYL("winnice")
-#define APPVERSION MYL("1.0.2")
+#define APPVERSION MYL("1.0.3")
 
 
 
@@ -46,7 +46,7 @@ void ShowErrorW(const std::wstring& message);
 void ShowErrorW(const std::wstringstream& message);
 tstring GetErrorWithLastErrorW(int err, DWORD pid);
 
-
+void ShowVersionW();
 void ShowHelpW(bool more=false);
 
 int DoSetPriority(DWORD dwProcessID,

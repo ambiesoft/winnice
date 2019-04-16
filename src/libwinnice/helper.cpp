@@ -81,6 +81,16 @@ tstring GetErrorWithLastErrorW(int err, DWORD pid)
 	wss << L"Failed to set priority of process " << pid << " with error" << MYL("(") << err << MYL(")") << errorMessage << endl;
     return wss.str();
 }
+
+void ShowVersionW()
+{
+	CHECK_USERFUNC(gUFShowOutputW);
+
+	wstringstream wss;
+	wss << APPNAME << MYL(" v") << APPVERSION << endl;
+	gUFShowOutputW(wss.str().c_str());
+}
+
 void ShowHelpW(bool more)
 {
 	CHECK_USERFUNC(gUFShowOutputW);
