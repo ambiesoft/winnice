@@ -120,6 +120,9 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -153,6 +156,9 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -186,6 +192,9 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -223,6 +232,9 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

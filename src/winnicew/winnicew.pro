@@ -2,10 +2,13 @@ TARGET = winnicew
 TEMPLATE = app
 
 SOURCES += \
-    winnicew.cpp
+    winnicew.cpp \
+    stdafx.cpp
 
 HEADERS += \
-    ../libwinnice/libwinnice.h
+    ../libwinnice/libwinnice.h \
+    stdafx.h \
+    winnicew.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libwinnice/release/ -llibwinnice
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libwinnice/debug/ -llibwinnice

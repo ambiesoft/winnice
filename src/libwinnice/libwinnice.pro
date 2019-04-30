@@ -35,7 +35,7 @@ SOURCES += \
 HEADERS += \
         libwinnice.h \
 		libwinnice_global.h \
-	../../../lsMisc/SetPrority.h \
+        ../../../lsMisc/stdosd/SetPrority.h \
 	../../../lsMisc/CommandLineString.h \
     mytype.h \
     ../../../lsMisc/CreateProcessCommon.h \
@@ -51,14 +51,14 @@ unix {
 win32 {
    SOURCES += \
 			osd_win32.cpp \
-			../../../lsMisc/SetPrority_win.cpp
+                        ../../../lsMisc/stdosd/SetPrority_win.cpp
 
    LIBS += -luser32 -lkernel32
 }
 linux-g++ {
 	SOURCES += \
 			osd_linux.cpp \
-			../../../lsMisc/SetPrority_linux.cpp
+                        ../../../lsMisc/stdosd/SetPrority_linux.cpp
 }
 
 
