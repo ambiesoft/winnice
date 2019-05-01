@@ -33,13 +33,14 @@
 #include <set>
 #include <iostream>
 #include <sstream>
+#include <functional>
 
 #include "../../../lsMisc/stdosd/SetPrority.h"
 #include "../../../lsMisc/CommandLineString.h"
 #include "../../../lsMisc/CreateProcessCommon.h"
 #include "../../../lsMisc/GetLastErrorString.h"
 #include "../../../lsMisc/tstring.h"
-#include "../../../lsMisc/stlScopedClear.h"
+// #include "../../../lsMisc/stlScopedClear.h"
 #include "../../../lsMisc/stdosd/stdosd.h"
 
 
@@ -502,8 +503,12 @@ int LibWinNiceMainW(
 			ShowError(wss.str());
 			return dwLastError;
 		}
-		STLSOFT_SCOPEDFREE_HANDLE(hProcess);
-		STLSOFT_SCOPEDFREE_HANDLE(hThread);
+
+		unique_ptr<HANDLE, std::function<void(HANDLE*)>>
+			hProcess_free(&hProcess, [](HANDLE* pH) { DVERIFY(::CloseHandle(*pH)); });
+		unique_ptr<HANDLE, std::function<void(HANDLE*)>>
+			hThread_free(&hThread, [](HANDLE* pH) { DVERIFY(::CloseHandle(*pH)); });
+
 
 		if (!bGui)
 		{

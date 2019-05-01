@@ -23,8 +23,8 @@
 #include "StdAfx.h"
 #include <sstream>
 
-#include "../../tstring.h"
-#include "../../GetLastErrorString.h"
+// #include "../../tstring.h"
+#include "../../../lsMisc/GetLastErrorString.h"
 
 #include "libwinnice.h"
 
