@@ -127,9 +127,10 @@ echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLL
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"</Command>
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -169,9 +170,10 @@ echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLL
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"</Command>
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -211,9 +213,10 @@ echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLL
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"</Command>
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -257,9 +260,10 @@ echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLL
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
 dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\*" /to:"$(OutDir)"
-dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC141.CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"</Command>
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
+dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\" &gt;&gt; "$(OutDir)RedistCopied.txt"
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
