@@ -1,3 +1,5 @@
+.*~
+
 build-*/
 
 src/.vs/
@@ -15,6 +17,7 @@ src/testtarget/testtarget.vcxproj.user
 src/testtarget/x64/
 
 src/testwinnice/Debug/
+src/testwinnice/Release/
 src/testwinnice/testwinnice.vcxproj.user
 
 src/winnice/Win32/
