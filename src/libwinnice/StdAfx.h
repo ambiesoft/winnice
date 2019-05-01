@@ -29,3 +29,12 @@
 #include <set>
 #include <iostream>
 #include <string>
+#include <functional>
+
+#include <assert.h>
+
+#ifdef _DEBUG
+#define DVERIFY(s) assert(s)
+#else
+#define DVERIFY(s) s
+#endif
