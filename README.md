@@ -21,3 +21,12 @@ You can specify many pids.
 All notepad.exe instances will be 'idle'.
 
 
+```
+> winnice.exe --io-idle --executable app.exe
+```
+This sets ipu IO priority of process 'app.exe' to 'idle.
+
+```
+> winnice.exe --all-idle --detach-newprocess --new-process notepad
+```
+Launch notepad, set all prorities to 'idle' and detach it(not wait it to finish).
