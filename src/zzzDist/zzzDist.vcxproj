@@ -23,32 +23,32 @@
     <ProjectGuid>{C6A1C8CF-413D-403E-B827-B8846284153A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>zzzDist</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -123,9 +123,9 @@ copy "$(SolutionDir)..\README.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+dir /B /s "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
 echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
@@ -166,9 +166,9 @@ copy "$(SolutionDir)..\README.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+dir /B /s "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
 echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
@@ -209,9 +209,9 @@ copy "$(SolutionDir)..\README.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+dir /B /s "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
 echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
@@ -256,9 +256,9 @@ copy "$(SolutionDir)..\README.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
-echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
-dir /B /s "$(UniversalCRTSdkDir_10)Redist\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
+echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+C:\LegacyPrograms\FFC\FFC.exe /t12 "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)\*" /to:"$(OutDir)"
+dir /B /s "$(UniversalCRTSdkDir_10)Redist\$(TargetUniversalCRTVersion)\ucrt\DLLs\$(PlatformTarget)" &gt;&gt; "$(OutDir)RedistCopied.txt"
 
 echo C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"
 C:\LegacyPrograms\FFC\FFC.exe /t12 "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\Microsoft.VC$(PlatformToolsetVersion).CRT\*" /to:"$(OutDir)"

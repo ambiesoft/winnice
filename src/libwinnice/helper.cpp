@@ -154,6 +154,9 @@ void ShowHelpW(bool more)
 	wss << L"--new-process" << endl;
 	wss << L"  (Omitable) create a new process and set priority" << endl;
 	wss << endl;
+	wss << L"--error-level" << endl;
+	wss << L"  'normal' or 'debug', default is 'normal'" << endl;
+	wss << endl;
 
 	gUFShowOutputW(wss.str().c_str());
 }

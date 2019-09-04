@@ -201,6 +201,11 @@ enum TargetType
 };
 
 
+enum ERROR_LEVEL {
+	ERROR_LEVEL_NONE,
+	ERROR_LEVEL_NORMAL,
+	ERROR_LEVEL_DEBUG,
+};
 int LibWinNiceMainW(
 	bool bGui,
 	int argc,
@@ -226,9 +231,11 @@ int LibWinNiceMainW(
 	const size_t count = cms.getCount();
 	set<DWORD> pidsToProcess;
 
+	ERROR_LEVEL errorLevel = ERROR_LEVEL_NORMAL;
+
 	{
 		// ensure these 2 sets are in this scope
-		set<DWORD> targetIDsFromExe;
+		set<wstring> targetExes;
 		set<DWORD> targetPIDs;
 
 		if (count <= 1)
@@ -319,16 +326,12 @@ int LibWinNiceMainW(
 			{
 				tstring exe = GetNextArgOrShowError(i, count, cms, option);
 				if (exe.empty())
-					return 1;
-
-				set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
-				if (vs.empty())
 				{
-					tstringstream tss;
-					tss << MYL("\"") << exe << MYL("\"") << MYL(" ") << MYL("not found") << endl;
-					ShowError(tss);
+					ShowError(L"No executable specified");
+					return 1;
 				}
-				targetIDsFromExe.insert(vs.begin(), vs.end());
+
+				targetExes.insert(exe);
 			}
 			else if (option == MYL("--pid"))
 			{
@@ -380,6 +383,30 @@ int LibWinNiceMainW(
 				ShowHelpW(true);
 				return 0;
 			}
+			else if (option == MYL("--error-level"))
+			{
+				tstring errorLevelString = GetNextArgOrShowError(i, count, cms, option);
+				if (errorLevelString.empty())
+				{
+					ShowError(L"No error level specified");
+					return 1;
+				}
+				if (errorLevelString == L"normal")
+				{
+					// default
+				}
+				else if (errorLevelString == L"debug")
+				{
+					errorLevel = ERROR_LEVEL_DEBUG;
+				}
+				else
+				{
+					wstringstream wss;
+					wss << L"Unknown error level '" << errorLevelString << "'" << endl;
+					ShowError(wss.str());
+					return 1;
+				}
+			}
 			else if (option.size() > 1 && option[0] == MYL('-'))
 			{
 				wstringstream message;
@@ -417,8 +444,21 @@ int LibWinNiceMainW(
 		}
 
 		// Set pid for processing
-	
-		pidsToProcess.insert(targetIDsFromExe.begin(), targetIDsFromExe.end());
+		for (auto&& exe : targetExes)
+		{
+			set<DWORD> vs = GetProcessIDFromExecutable(exe.c_str());
+			if (vs.empty() && errorLevel >= ERROR_LEVEL_DEBUG)
+			{
+				tstringstream tss;
+				tss << MYL("\"") << exe << MYL("\"") << MYL(" ") << MYL("not found") << endl;
+				ShowError(tss);
+			}
+			else
+			{
+				pidsToProcess.insert(vs.begin(), vs.end());
+			}
+		}
+		
 		pidsToProcess.insert(targetPIDs.begin(), targetPIDs.end());
 	}
 		
