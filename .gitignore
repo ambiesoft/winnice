@@ -1,6 +1,7 @@
 .*~
 
 build-*/
+x64/
 
 src/.vs/
 src/Debug/
