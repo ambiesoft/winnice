@@ -407,6 +407,15 @@ int LibWinNiceMainW(
 					return 1;
 				}
 			}
+			else if (option == MYL("--show-nooutput"))
+			{
+				gShowNoOutput = true;
+			}
+			else if (option == MYL("--show-noerror"))
+			{
+				gShowNoError = true;
+			}
+
 			else if (option.size() > 1 && option[0] == MYL('-'))
 			{
 				wstringstream message;

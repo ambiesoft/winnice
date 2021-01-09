@@ -28,12 +28,16 @@
 #define MYL(s) L ## s
 
 #define APPNAME MYL("winnice")
-#define APPVERSION MYL("1.1.1")
+#define APPVERSION MYL("1.1.2")
 
 
 
 extern WNUShowInformationW gUFShowOutputW;
 extern WNUShowInformationW gUFShowErrorW;
+
+extern bool gShowNoOutput;
+extern bool gShowNoError;
+
 
 void ShowOutputW(const wchar_t* pMessage);
 void ShowOutputW(const std::wstring& s);

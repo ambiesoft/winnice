@@ -35,6 +35,8 @@ using namespace Ambiesoft::stdosd;
 WNUShowInformationW gUFShowOutputW;
 WNUShowInformationW gUFShowErrorW;
 
+bool gShowNoOutput = false;
+bool gShowNoError = false;
 #define CHECK_USERFUNC(func) do { if(!func) {return;}} while(false)
 
 using namespace std;
@@ -42,34 +44,34 @@ using namespace Ambiesoft;
 
 void ShowOutputW(const wchar_t* pMessage)
 {
+	if (gShowNoOutput)
+		return;
 	CHECK_USERFUNC(gUFShowOutputW);
 	gUFShowOutputW(pMessage);
 }
 void ShowOutputW(const std::wstring& s)
 {
-	CHECK_USERFUNC(gUFShowOutputW);
 	ShowOutputW(s.c_str());
 }
 void ShowOutputW(const std::wstringstream& s)
 {
-	CHECK_USERFUNC(gUFShowOutputW);
 	ShowOutputW(s.str());
 }
 
 
 void ShowErrorW(const wchar_t* pMessage)
 {
+	if (gShowNoError)
+		return;
 	CHECK_USERFUNC(gUFShowErrorW);
 	gUFShowErrorW(pMessage);
 }
 void ShowErrorW(const std::wstring& message)
 {
-	CHECK_USERFUNC(gUFShowErrorW);
 	ShowErrorW(message.c_str());
 }
 void ShowErrorW(const std::wstringstream& message)
 {
-	CHECK_USERFUNC(gUFShowErrorW);
 	ShowErrorW(message.str());
 }
 tstring GetErrorWithLastErrorW(int err, DWORD pid)
@@ -104,16 +106,21 @@ void ShowHelpW(bool more)
 	wss << L"  [--io-high | --io-abovenormal | --io-normal | --io-belownormal | --io-idle | --io-default]" << endl;
 	wss << L"  [--mem-high | --mem-abovenormal | --mem-normal | --mem-belownormal | --mem-idle | --mem-default]" << endl;
 	wss << L"  [--all-abovenormal | --all-normal | --all-belownormal | --all-idle]" << endl;
-	wss << L"  Currenly, '--io-high' and '--io-abovenormal' is equal to '--io-normal'" << endl;
-	wss << L"  Likewise, '--mem-abovenormal' and '--mem-normal' is equal to '--mem-high'" << endl;
+	wss << L"  Currenly, '--io-high' and '--io-abovenormal' is equal to '--io-normal'." << endl;
+	wss << L"  Likewise, '--mem-abovenormal' and '--mem-normal' is equal to '--mem-high'." << endl;
 	wss << endl;
+
+	wss << L"  [--show-nooutput] [--show-noerror] " << endl;
+	wss << L"  Will not show standard output or error output." << endl;
+	wss << endl;
+
 	wss << L"  [--show-command]" << endl;
-	wss << L"  Show the command for creating a new process" << endl;
+	wss << L"  Show the command for creating a new process." << endl;
 	wss << endl;
 	wss << L"  [--exit-if-setpriority-failed]" << endl;
 	wss << L"  [--detach-newprocess | --wait-newprocess]" << endl;
 	wss << L"  Whether or not to wait new process to finish. Default value is different between winnice and winnicew, "
-		L"winnice's default value is '--wait-newprocess' and winnicew's one is '--detach-newprocess'" << endl;
+		L"winnice's default value is '--wait-newprocess' and winnicew's one is '--detach-newprocess'." << endl;
 	wss << endl;
 	wss << L"  [--executable Executable [--executable Executable]]..." << endl;
 	wss << L"  Specify executables" << endl;
@@ -127,11 +134,11 @@ void ShowHelpW(bool more)
 	wss << L"  If this option is not a last one, The position of the first unaware string will be the start of the command line string to launch a process." << endl;
 	wss << endl;
 	wss << L"  [- NotOptionArg]" << endl;
-	wss << L"  If '-' appears after '--new-process', next argument will be treated as executable" << endl;
+	wss << L"  If '-' appears after '--new-process', next argument will be treated as executable." << endl;
 	if (!more)
 	{
 		wss << endl;
-		wss << L"Run with '--helpmore' for more help" << endl;
+		wss << L"Run with '--helpmore' for more help." << endl;
 
 		gUFShowOutputW(wss.str().c_str());
 		return;
