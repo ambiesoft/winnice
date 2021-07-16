@@ -112,7 +112,6 @@
 del "$(OutDir)*.exp"
 del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
-del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
 del $(OutDir)testtarget.exe
@@ -120,6 +119,7 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+copy "$(SolutionDir)..\README.ja.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
@@ -155,7 +155,6 @@ dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\
 del "$(OutDir)*.exp"
 del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
-del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
 del $(OutDir)testtarget.exe
@@ -163,6 +162,7 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+copy "$(SolutionDir)..\README.ja.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
@@ -198,7 +198,6 @@ dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\
 del "$(OutDir)*.exp"
 del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
-del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
 del $(OutDir)testtarget.exe
@@ -206,6 +205,7 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+copy "$(SolutionDir)..\README.ja.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 
@@ -245,7 +245,6 @@ dir /B /s "$(VCInstallDir)Redist\MSVC\$(VCToolsRedistVersion)\$(PlatformTarget)\
 del "$(OutDir)*.exp"
 del "$(OutDir)*.iobj"
 del "$(OutDir)*.ipdb"
-del "$(OutDir)*.pdb"
 del "$(OutDir)*.lib"
 
 del $(OutDir)testtarget.exe
@@ -253,6 +252,7 @@ del $(OutDir)runtest.bat
 
 copy "$(SolutionDir)history.txt" "$(OutDir)"
 copy "$(SolutionDir)..\README.md" "$(OutDir)"
+copy "$(SolutionDir)..\README.ja.md" "$(OutDir)"
 
 del "$(OutDir)RedistCopied.txt"
 

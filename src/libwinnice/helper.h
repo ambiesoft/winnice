@@ -28,7 +28,7 @@
 #define MYL(s) L ## s
 
 #define APPNAME MYL("winnice")
-#define APPVERSION MYL("1.1.2")
+#define APPVERSION MYL("1.1.3")
 
 
 
