@@ -24,7 +24,7 @@
 #include <sstream>
 
 // #include "../../tstring.h"
-#include "../../../lsMisc/GetLastErrorString.h"
+#include "lsMisc/GetLastErrorString.h"
 
 #include "libwinnice.h"
 

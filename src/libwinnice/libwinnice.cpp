@@ -35,13 +35,12 @@
 #include <sstream>
 #include <functional>
 
-#include "../../../lsMisc/stdosd/SetPrority.h"
-#include "../../../lsMisc/CommandLineString.h"
-#include "../../../lsMisc/CreateProcessCommon.h"
-#include "../../../lsMisc/GetLastErrorString.h"
-#include "../../../lsMisc/tstring.h"
-// #include "../../../lsMisc/stlScopedClear.h"
-#include "../../../lsMisc/stdosd/stdosd.h"
+#include "lsMisc/stdosd/SetPrority.h"
+#include "lsMisc/CommandLineString.h"
+#include "lsMisc/CreateProcessCommon.h"
+#include "lsMisc/GetLastErrorString.h"
+#include "lsMisc/tstring.h"
+#include "lsMisc/stdosd/stdosd.h"
 
 
 #include "libwinnice.h"

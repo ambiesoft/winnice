@@ -23,7 +23,7 @@
 #pragma once
 
 #include "libwinnice.h"
-#include "../../../lsMisc/stdosd/SetPrority.h"
+#include "lsMisc/stdosd/SetPrority.h"
 
 #define MYL(s) L ## s
 

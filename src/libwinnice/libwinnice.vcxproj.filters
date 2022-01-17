@@ -42,14 +42,14 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\GetLastErrorString.cpp">
-      <Filter>Source Files\lsMisc</Filter>
+    <ClCompile Include="..\..\lsMisc\CreateProcessCommon.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\stdosd\SetPrority_win.cpp">
-      <Filter>Source Files\lsMisc\stdosd</Filter>
+    <ClCompile Include="..\..\lsMisc\GetLastErrorString.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lsMisc\CreateProcessCommon.cpp">
-      <Filter>Source Files\lsMisc</Filter>
+    <ClCompile Include="..\..\lsMisc\stdosd\SetPrority_win.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,20 +65,20 @@
     <ClInclude Include="helper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\GetLastErrorString.h">
-      <Filter>Header Files\lsMisc</Filter>
+    <ClInclude Include="..\..\lsMisc\CreateProcessCommon.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\tstring.h">
-      <Filter>Header Files\lsMisc</Filter>
+    <ClInclude Include="..\..\lsMisc\GetLastErrorString.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\stdosd\SetPrority.h">
-      <Filter>Header Files\lsMisc\stdosd</Filter>
+    <ClInclude Include="..\..\lsMisc\stdosd\SetPrority.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\stdosd\stdosd.h">
-      <Filter>Header Files\lsMisc\stdosd</Filter>
+    <ClInclude Include="..\..\lsMisc\stdosd\stdosd.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lsMisc\CreateProcessCommon.h">
-      <Filter>Header Files\lsMisc</Filter>
+    <ClInclude Include="..\..\lsMisc\tstring.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
