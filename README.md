@@ -2,7 +2,7 @@
 Command line tool for setting Process Priority in Windows
 
 # Environment
-Visual Studio 2019 runtime library 
+Visual Studio 2022 runtime library 
 
 # Install 
 Extract the downloaded archive and run *winnice_x.x.x.exe*
@@ -43,6 +43,22 @@ Remove files
 ### Launch notepad, set all prorities (CPU,IO,Memory) to *idle* and detach it(not wait for it to finish).
 ```
 > winnice.exe --all-idle --detach-newprocess --new-process notepad
+```
+
+### Using it as a library
+The interface of the library is the same as the command line.
+```
+#include "../libwinnice/libwinnice.h"
+
+int argc = 0;
+
+// First argument is dummy
+const wchar_t* commandLine = L"dummy.exe --all-idle --new-process notepad";
+
+// Create argc and argv from command line
+std::unique_ptr<LPWSTR, void(*)(LPWSTR*)> pArgv(::CommandLineToArgvW(commandLine, &argc),
+	[](LPWSTR* ptr) { ::LocalFree(ptr); });
+int nRetNotepad = LibWinNiceMainW(false, argc, pArgv.get(), NULL, NULL);
 ```
 
 # Support

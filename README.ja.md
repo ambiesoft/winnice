@@ -2,7 +2,7 @@
 Windows用のプロセスの優先度を設定するコマンドラインアプリです
 
 # 環境
-Visual Studio 2019 ランタイムライブラリ
+Visual Studio 2022 ランタイムライブラリ
 
 # インストール
 ダウンロードしたアーカイブを実行して展開します
@@ -43,7 +43,25 @@ Visual Studio 2019 ランタイムライブラリ
 ### メモ帳を起動しすべての優先度（CPU,IO,メモリ）を*アイドル*にせっていし、起動したプロセスを切り離します（終了を待ちません）
 ```
 > winnice.exe --all-idle --detach-newprocess --new-process notepad
+
 ```
+
+### ライブラリとして使う
+ライブラリのインターフェイスはコマンドラインと同じです。
+```
+#include "../libwinnice/libwinnice.h"
+
+int argc = 0;
+
+// First argument is dummy
+const wchar_t* commandLine = L"dummy.exe --all-idle --new-process notepad";
+
+// Create argc and argv from command line
+std::unique_ptr<LPWSTR, void(*)(LPWSTR*)> pArgv(::CommandLineToArgvW(commandLine, &argc),
+	[](LPWSTR* ptr) { ::LocalFree(ptr); });
+int nRetNotepad = LibWinNiceMainW(false, argc, pArgv.get(), NULL, NULL);
+```
+
 
 # サポート
 ここ <https://github.com/ambiesoft/winnice/issues>　に問題を投稿するか掲示板に投稿してください
